@@ -1,64 +1,47 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 html, body {
-  margin: 0; height: 100%; overflow: hidden;
-  background: #0e1116;
-  font-family: "Consolas", "Menlo", "Courier New", monospace;
-  /* Cegah scroll, zoom, dan menu long-press di iOS */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #1a1a2e;
+  font-family: -apple-system, sans-serif;
+  color: #fff;
   touch-action: none;
-  -webkit-user-select: none; user-select: none;
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
   -webkit-touch-callout: none;
+}
+
+canvas {
+  display: block;
+  touch-action: none;
+}
+
+#zoom-controls {
+  position: fixed;
+  top: 80px;
+  right: 12px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#zoom-controls button {
+  width: 44px;
+  height: 44px;
+  background: rgba(20,20,40,0.8);
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 8px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-#game { position: fixed; inset: 0; }
-#game canvas { display: block; }
 
-#hud { position: fixed; inset: 0; pointer-events: none; color: #cbd5e1; }
-#hud.hidden { display: none; }
-
-#coords {
-  position: absolute; top: 12px; left: 12px;
-  padding: 6px 10px; font-size: 13px;
-  background: rgba(14, 17, 22, 0.85);
-  border: 1px solid #2a313c;
-}
-#minimap {
-  position: absolute; top: 12px; right: 12px;
-  width: 100px; height: 100px;
-  border: 1px solid #2a313c;
-  background: #0e1116;
-  image-rendering: pixelated;
-}
-#hint {
-  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
-  padding: 6px 12px; font-size: 12px; color: #94a3b8;
-  background: rgba(14, 17, 22, 0.85);
-  border: 1px solid #2a313c;
-}
-
-/* Joystick: pojok kiri bawah, menghormati safe area iPhone */
-#joy-base {
-  position: absolute;
-  left: calc(20px + env(safe-area-inset-left, 0px));
-  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-  width: 120px; height: 120px; border-radius: 50%;
-  background: rgba(14, 17, 22, 0.6);
-  border: 1px solid #2a313c;
-  pointer-events: auto;   /* HUD lain tidak menerima sentuhan, joystick ya */
-  touch-action: none;
-}
-#joy-knob {
-  position: absolute; left: 50%; top: 50%;
-  width: 50px; height: 50px; margin: -25px 0 0 -25px;
-  border-radius: 50%;
-  background: rgba(203, 213, 225, 0.35);
-  border: 1px solid #94a3b8;
-  pointer-events: none;
-}
-
-/* Di layar sentuh, hint pindah ke kanan bawah agar tidak menabrak joystick */
-@media (pointer: coarse) {
-  #hint {
-    left: auto; transform: none;
-    right: calc(12px + env(safe-area-inset-right, 0px));
-    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-  }
+#zoom-controls button:active {
+  background: #e94560;
 }
