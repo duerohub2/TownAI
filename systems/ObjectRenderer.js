@@ -79,7 +79,7 @@ class ObjectRenderer {
   }
 
   // ============================================================
-  // DESK — 4 kaki + permukaan tipis + drawer
+  // DESK — 4 kaki + permukaan tipis + drawer + mug di atas
   // ============================================================
   _buildDesk(desc) {
     const HW = window.TILE_HW, HH = window.TILE_HH;
@@ -87,9 +87,9 @@ class ObjectRenderer {
     const topH = 6;
     const legH = 16;
     const totalH = topH + legH;
-    const pad = 14;
+    const pad = 20;
     const width  = (w + d) * HW + pad * 2;
-    const height = (w + d) * HH + totalH + pad * 2;
+    const height = (w + d) * HH + totalH + pad * 2 + 20;
     const nx = d * HW + pad, ny = totalH + pad;
 
     const topC = 0xc69060, topL = 0x7a5020, topR = 0xa07848;
@@ -97,30 +97,24 @@ class ObjectRenderer {
     const drawerC = 0x9a6a3a, drawerLine = 0x3a2010, handleC = 0xe0c080;
 
     const key = this._makeTex(width, height, (g) => {
-      // Legs (render dulu supaya di belakang top)
       const legW = 0.2, legD = 0.2;
       const inX = 4, inY = 4;
 
-      // North leg
       window.drawIsoBox(g, nx + inX, ny + inY, legW, legD, legH, legC, legL, legR);
-      // East leg
       window.drawIsoBox(g, nx + (w - legW) * HW - inX, ny + (w - legW) * HH + inY,
                         legW, legD, legH, legC, legL, legR);
-      // South leg
       window.drawIsoBox(g,
         nx + (w - d - legW + legD) * HW + inX,
         ny + (w + d - legW - legD) * HH - inY,
         legW, legD, legH, legC, legL, legR);
-      // West leg
       window.drawIsoBox(g,
         nx - (d - legD) * HW - inX,
         ny + (d - legD) * HH - inY,
         legW, legD, legH, legC, legL, legR);
 
-      // Top thin box
       window.drawIsoBox(g, nx, ny - legH, w, d, topH, topC, topL, topR);
 
-      // Drawer panel di face kanan (E–S)
+      // Drawer di face kanan
       const Ex = nx + w * HW,       Ey = ny - legH + w * HH;
       const Sx = nx + (w - d) * HW, Sy = ny - legH + (w + d) * HH;
       const drwH = legH * 0.55;
@@ -144,15 +138,35 @@ class ObjectRenderer {
       g.closePath();
       g.strokePath();
 
-      // Handle
       g.fillStyle(handleC, 1);
       g.fillRect((Ex + Sx) / 2 - 4, (drwTop + drwTopSy) / 2 + drwH * 0.5 - 2, 8, 3);
+
+      // ---- Mug kopi di atas meja (sisi kiri-depan) ----
+      const mugX = nx + w * HW * 0.78;
+      const mugY = ny - legH - topH + w * HH * 0.78;
+      // Body mug
+      g.fillStyle(0xf5f5f5, 1);
+      g.fillEllipse(mugX, mugY, 9, 10);
+      // Kopi dalam
+      g.fillStyle(0x4a2a10, 1);
+      g.fillEllipse(mugX, mugY - 1, 6, 6);
+      // Handle
+      g.fillStyle(0xf5f5f5, 1);
+      g.fillEllipse(mugX + 5, mugY, 4, 6);
+
+      // ---- Buku catatan (sisi kanan-belakang) ----
+      const bkX = nx + (w - d) * HW * 0.35 + w * HW * 0.15;
+      const bkY = ny - legH - topH + (w + d) * HH * 0.35;
+      g.fillStyle(0xc8b090, 1);
+      g.fillEllipse(bkX, bkY, 12, 6);
+      g.fillStyle(0x8a3a3a, 1);
+      g.fillEllipse(bkX, bkY - 1, 10, 4);
     });
     return { texKey: key, offX: nx, offY: ny };
   }
 
   // ============================================================
-  // TABLE — 4 kaki + permukaan sangat tipis
+  // TABLE — 4 kaki + permukaan tipis
   // ============================================================
   _buildTable(desc) {
     const HW = window.TILE_HW, HH = window.TILE_HH;
@@ -160,9 +174,9 @@ class ObjectRenderer {
     const topH = 5;
     const legH = 15;
     const totalH = topH + legH;
-    const pad = 14;
+    const pad = 20;
     const width  = (w + d) * HW + pad * 2;
-    const height = (w + d) * HH + totalH + pad * 2;
+    const height = (w + d) * HH + totalH + pad * 2 + 12;
     const nx = d * HW + pad, ny = totalH + pad;
 
     const topC = 0xc09060, topL = 0x705030, topR = 0xa07848;
@@ -186,7 +200,6 @@ class ObjectRenderer {
 
       window.drawIsoBox(g, nx, ny - legH, w, d, topH, topC, topL, topR);
 
-      // Highlight edge N–E
       const Nx = nx,                 Ny = ny - legH - topH;
       const Ex = nx + w * HW,        Ey = ny - legH - topH + w * HH;
       g.lineStyle(1, 0xe0b880, 0.8);
@@ -199,16 +212,16 @@ class ObjectRenderer {
   }
 
   // ============================================================
-  // CHAIR — kaki + dudukan + sandaran
+  // CHAIR — 4 kaki + dudukan + sandaran (gaming style)
   // ============================================================
   _buildChair(desc) {
     const HW = window.TILE_HW, HH = window.TILE_HH;
     const w = 0.85, d = 0.85;
-    const legH = 10;
+    const legH = 12;
     const seatH = 5;
-    const backH = 13;
+    const backH = 18;
     const totalH = legH + seatH + backH;
-    const pad = 16;
+    const pad = 20;
     const width  = (w + d) * HW + pad * 2;
     const height = (w + d) * HH + totalH + pad * 2;
     const nx = d * HW + pad, ny = totalH + pad;
@@ -219,11 +232,21 @@ class ObjectRenderer {
 
     const key = this._makeTex(width, height, (g) => {
       // Sandaran (render dulu, di belakang)
-      const backD = 0.18;
+      const backD = 0.22;
       window.drawIsoBox(g, nx, ny - legH - seatH - backH + 2, w, backD, backH,
                         backC, backL, backR);
 
-      // 4 kaki
+      // Garis vertical di sandaran
+      const bEx = nx + w * HW, bEy = ny - legH - seatH - backH + 2 + w * HH;
+      g.lineStyle(1, 0x1a0a1a, 0.6);
+      for (let i = 1; i < 3; i++) {
+        const tx = i / 3;
+        g.beginPath();
+        g.moveTo(nx + w * HW * tx, ny - legH - seatH - backH + 2 + w * HH * tx);
+        g.lineTo(nx + w * HW * tx, ny - legH - seatH + w * HH * tx);
+        g.strokePath();
+      }
+
       const legW = 0.15, legD = 0.15;
       const inX = 3, inY = 3;
       window.drawIsoBox(g, nx + inX, ny + inY, legW, legD, legH, legC, legL, legR);
@@ -241,13 +264,13 @@ class ObjectRenderer {
       // Dudukan
       window.drawIsoBox(g, nx, ny - legH, w, d, seatH, seatC, seatL, seatR);
 
-      // Cushion highlight (parallelogram tipis di permukaan atas)
+      // Cushion highlight
       const Nx = nx,                  Ny = ny - legH - seatH;
       const Ex = nx + w * HW,         Ey = ny - legH - seatH + w * HH;
       const Sx = nx + (w - d) * HW,   Sy = ny - legH - seatH + (w + d) * HH;
       const Wx = nx - d * HW,         Wy = ny - legH - seatH + d * HH;
 
-      g.fillStyle(this._brighten(seatC, 25), 1);
+      g.fillStyle(this._brighten(seatC, 30), 1);
       g.beginPath();
       g.moveTo((Nx + Ex) / 2, (Ny + Ey) / 2);
       g.lineTo((Ex + Sx) / 2, (Ey + Sy) / 2);
@@ -278,7 +301,6 @@ class ObjectRenderer {
       const Ex = nx + w * HW,       Ey = ny + w * HH;
       const Sx = nx + (w - d) * HW, Sy = ny + (w + d) * HH;
 
-      // 3 garis drawer
       const nd = 3;
       for (let i = 1; i < nd; i++) {
         const fy = i / nd;
@@ -288,7 +310,6 @@ class ObjectRenderer {
         g.lineTo(Sx, Sy - h * fy);
         g.strokePath();
       }
-      // Handle (di tengah setiap drawer)
       for (let i = 0; i < nd; i++) {
         const fy = (i + 0.5) / nd;
         const hx = (Ex + Sx) / 2;
@@ -320,21 +341,18 @@ class ObjectRenderer {
       const Sx = nx + (w - d) * HW, Sy = ny + (w + d) * HH;
       const Nx = nx,                Ny = ny - h;
 
-      // Edge highlight di top north-east
       g.lineStyle(2, edgeC, 0.5);
       g.beginPath();
       g.moveTo(Nx, Ny);
       g.lineTo(Ex, Ey - h);
       g.strokePath();
 
-      // Drawer line
       g.lineStyle(1, edgeC, 0.6);
       g.beginPath();
       g.moveTo(Ex, Ey - h * 0.5);
       g.lineTo(Sx, Sy - h * 0.5);
       g.strokePath();
 
-      // Handle
       g.fillStyle(edgeC, 1);
       g.fillRect((Ex + Sx) / 2 - 5, (Ey + Sy) / 2 - h * 0.5 + 4, 10, 2);
     });
@@ -350,7 +368,7 @@ class ObjectRenderer {
     const potH = 11;
     const stemH = 14;
     const petalSize = 15;
-    const pad = 12;
+    const pad = 14;
     const width  = (w + d) * HW + pad * 2;
     const height = (w + d) * HH + potH + stemH + petalSize + pad * 2 + 6;
     const nx = d * HW + pad, ny = height - pad;
@@ -363,17 +381,13 @@ class ObjectRenderer {
     const seed = (desc.gx || 0) * 7 + (desc.gy || 0) * 13;
 
     const key = this._makeTex(width, height, (g) => {
-      // Pot
       window.drawIsoBox(g, nx, ny, w, d, potH, potC, potL, potR);
-      // Rim (tipis di atas pot)
       window.drawIsoBox(g, nx - 0.04, ny - potH + 1, w + 0.08, d + 0.08, 3,
                         rimC, potL, potR);
 
-      // Pusat atas pot
       const cxp = nx + (w / 2 - d / 2) * HW;
       const cyp = ny + (w / 2 + d / 2) * HH - potH;
 
-      // Daun
       g.fillStyle(leafC, 1);
       g.fillEllipse(cxp - 9, cyp - 2, 12, 7);
       g.fillEllipse(cxp + 9, cyp - 2, 12, 7);
@@ -381,7 +395,6 @@ class ObjectRenderer {
       g.fillEllipse(cxp - 6, cyp - 4, 9, 5);
       g.fillEllipse(cxp + 6, cyp - 4, 9, 5);
 
-      // Tangkai + kelopak
       const petalCenters = [];
       for (let i = 0; i < 5; i++) {
         const ang = (i / 5) * Math.PI * 2 + seed * 0.7;
@@ -395,7 +408,6 @@ class ObjectRenderer {
         g.lineTo(fx, fy);
         g.strokePath();
       }
-      // Kelopak (render setelah semua tangkai)
       for (let i = 0; i < petalCenters.length; i++) {
         const { x: fx, y: fy } = petalCenters[i];
         const pc = petals[(i + seed) % petals.length];
@@ -412,16 +424,44 @@ class ObjectRenderer {
   }
 
   // ============================================================
-  // MONITOR — besar + layar biru terang + baris teks
+  // MONITOR — body + layar biru + keyboard + mouse
   // ============================================================
   _buildMonitor(desc) {
     const HW = window.TILE_HW, HH = window.TILE_HH;
     const w = desc.w || 1, d = desc.d || 0.4, h = desc.h || 18;
-    const width  = (w + d) * HW;
-    const height = (w + d) * HH + h + 14;
-    const nx = d * HW, ny = h + 12;
+    const pad = 30;
+    const width  = (w + d) * HW + pad * 2;
+    const height = (w + d) * HH + h + 40;
+    const nx = d * HW + pad, ny = h + 30;
 
     const key = this._makeTex(width, height, (g) => {
+      // Keyboard (di depan monitor, lebih ke selatan)
+      const kbW = w * 0.75, kbD = 0.3;
+      const kbX = nx + (w - kbW) * HW / 2;
+      const kbY = ny + 10;
+      window.drawIsoBox(g, kbX, kbY, kbW, kbD, 3,
+                        0x2a2a3a, 0x1a1a2a, 0x222232);
+
+      // Baris tombol keyboard
+      const kbEx = kbX + kbW * HW, kbEy = kbY + kbW * HH;
+      const kbSx = kbX + (kbW - kbD) * HW, kbSy = kbY + (kbW + kbD) * HH;
+      g.lineStyle(1, 0x5a5a6a, 0.7);
+      for (let i = 1; i < 4; i++) {
+        const t = i / 4;
+        g.beginPath();
+        g.moveTo(kbEx + (kbSx - kbEx) * t, kbEy + (kbSy - kbEy) * t - 3);
+        g.lineTo(kbEx + (kbSx - kbEx) * t, kbEy + (kbSy - kbEy) * t);
+        g.strokePath();
+      }
+
+      // Mouse (sisi kanan keyboard)
+      const mX = kbX + kbW * HW + 14;
+      const mY = kbY + kbW * HH + 2;
+      g.fillStyle(0x2a2a3a, 1);
+      g.fillEllipse(mX, mY - 3, 10, 12);
+      g.fillStyle(0x4a4a5a, 1);
+      g.fillEllipse(mX, mY - 5, 4, 4);
+
       // Stand base
       window.drawIsoBox(g, nx, ny, 0.5, 0.4, 3, 0x3a3a3a, 0x1a1a1a, 0x2a2a2a);
       // Stand neck
@@ -432,7 +472,7 @@ class ObjectRenderer {
       const Ex = nx + w * HW,       Ey = ny - 8 + w * HH;
       const Sx = nx + (w - d) * HW, Sy = ny - 8 + (w + d) * HH;
 
-      // Layar biru terang
+      // Layar biru
       g.fillStyle(0x6aaaff, 1);
       g.beginPath();
       g.moveTo(Ex - 3, Ey - h * 0.88);
@@ -442,7 +482,7 @@ class ObjectRenderer {
       g.closePath();
       g.fillPath();
 
-      // Baris "kode" di layar
+      // Baris kode
       g.fillStyle(0xc0e0ff, 0.85);
       const lines = [0.75, 0.62, 0.50, 0.38];
       const widths = [0.85, 0.7, 0.9, 0.55];
@@ -472,7 +512,7 @@ class ObjectRenderer {
   }
 
   // ============================================================
-  // SOFA — body + backrest + cushion div
+  // SOFA
   // ============================================================
   _buildSofa(desc) {
     const HW = window.TILE_HW, HH = window.TILE_HH;
@@ -486,18 +526,14 @@ class ObjectRenderer {
     const nx = d * HW, ny = h + 18;
 
     const key = this._makeTex(width, height, (g) => {
-      // Backrest (di belakang, sisi utara)
       window.drawIsoBox(g, nx, ny - h, w, 0.2, h * 0.9,
                         cushion, bodyDark, bodyColor);
-
-      // Body
       window.drawIsoBox(g, nx, ny, w, d, h, bodyColor, bodyDark, bodyColor);
 
       const Ex = nx + w * HW,       Ey = ny + w * HH;
       const Sx = nx + (w - d) * HW, Sy = ny + (w + d) * HH;
       const Nx = nx,                Ny = ny;
 
-      // Cushion division (kalau w >= 2)
       if (w >= 2) {
         const midNx = Nx + w * HW * 0.5;
         const midNy = Ny + w * HH * 0.5;
@@ -515,7 +551,6 @@ class ObjectRenderer {
         g.strokePath();
       }
 
-      // Top cushion highlight
       g.fillStyle(cushion, 0.5);
       g.beginPath();
       g.moveTo(Nx, Ny - h + 2);
@@ -531,7 +566,7 @@ class ObjectRenderer {
   }
 
   // ============================================================
-  // SIGN — tiang coklat + papan krem
+  // SIGN
   // ============================================================
   _buildSign(desc) {
     const HW = window.TILE_HW, HH = window.TILE_HH;
@@ -548,25 +583,21 @@ class ObjectRenderer {
     const boardEdgeC = 0x8a6a3a;
 
     const key = this._makeTex(width, height, (g) => {
-      // Post
       window.drawIsoBox(g, nx - w * HW / 2, ny, w, d, postH, postC, postL, postR);
 
-      // Board (di atas post)
-      const bx = nx - boardW * HW / 2 - boardD * HH * 0; // center post
+      const bx = nx - boardW * HW / 2;
       window.drawIsoBox(g, bx, ny - postH + 2, boardW, boardD, boardH,
                         boardC, boardL, boardR);
 
       const Ex = bx + boardW * HW,       Ey = ny - postH + 2 + boardW * HH;
       const Sx = bx + (boardW - boardD) * HW, Sy = ny - postH + 2 + (boardW + boardD) * HH;
 
-      // Border hitam
       g.lineStyle(2, boardEdgeC, 1);
       g.beginPath();
       g.moveTo(Ex - 3, Ey - boardH * 0.85);
       g.lineTo(Sx + 3, Sy - boardH * 0.85);
       g.strokePath();
 
-      // "Tulisan" di papan (garis-garis)
       g.lineStyle(1, 0x5a4a30, 0.8);
       for (let i = 0; i < 3; i++) {
         const fy = 0.3 + i * 0.22;
@@ -580,7 +611,7 @@ class ObjectRenderer {
   }
 
   // ============================================================
-  // LAMP — base + pole + shade + glow
+  // LAMP
   // ============================================================
   _buildLamp(desc) {
     const HW = window.TILE_HW, HH = window.TILE_HH;
@@ -592,22 +623,18 @@ class ObjectRenderer {
     const p = window.PALETTE.lamp;
 
     const key = this._makeTex(width, height, (g) => {
-      // Base
       window.drawIsoBox(g, nx - 12, ny - 2, 0.75, 0.75, 4,
                         0x4a4a4a, 0x2a2a2a, 0x3a3a3a);
 
-      // Pole
       window.drawIsoBox(g, nx - 4, ny - 6, 0.25, 0.25, poleH,
                         p.pole, p.poleDark, p.pole);
 
-      const cxp = nx - 4 + 4; // = nx
+      const cxp = nx;
       const cyp = ny - 6 + 8 - poleH;
 
-      // Glow halo
       g.fillStyle(p.glow, 0.28);
       g.fillEllipse(cxp, cyp + 14, 38, 16);
 
-      // Shade (trapesium)
       g.fillStyle(p.shade, 1);
       g.beginPath();
       g.moveTo(cxp - 16, cyp - 8);
@@ -617,7 +644,6 @@ class ObjectRenderer {
       g.closePath();
       g.fillPath();
 
-      // Shade top
       g.fillStyle(p.shadeDark, 1);
       g.beginPath();
       g.moveTo(cxp - 16, cyp - 8);
@@ -627,7 +653,6 @@ class ObjectRenderer {
       g.closePath();
       g.fillPath();
 
-      // Bulb bawah
       g.fillStyle(0xffee99, 1);
       g.fillEllipse(cxp, cyp + 12, 14, 6);
     });
@@ -635,7 +660,7 @@ class ObjectRenderer {
   }
 
   // ============================================================
-  // Simple / passing-through builders
+  // Simple builders
   // ============================================================
   _buildFridge(desc) {
     const HW = window.TILE_HW, HH = window.TILE_HH;
@@ -842,9 +867,7 @@ class ObjectRenderer {
     const p = window.PALETTE.bench;
 
     const key = this._makeTex(width, height, (g) => {
-      // Backrest
       window.drawIsoBox(g, nx, ny - h - 6, w, 0.15, h * 0.9, p.wood, p.woodDark, p.wood);
-      // Seat
       window.drawIsoBox(g, nx, ny, w, d, h, p.wood, p.woodDark, p.wood);
 
       const Ex = nx + w * HW,       Ey = ny + w * HH;
@@ -887,7 +910,6 @@ class ObjectRenderer {
       const Ex = nx + w * HW,       Ey = ny + w * HH;
       const Sx = nx + (w - d) * HW, Sy = ny + (w + d) * HH;
 
-      // Screen neon
       g.fillStyle(p.screen, 1);
       g.beginPath();
       g.moveTo(Ex - 4, Ey - h * 0.80);
@@ -897,7 +919,6 @@ class ObjectRenderer {
       g.closePath();
       g.fillPath();
 
-      // Inner screen glow
       g.fillStyle(0xffffff, 0.5);
       g.beginPath();
       g.moveTo(Ex - 7, Ey - h * 0.74);
@@ -907,14 +928,12 @@ class ObjectRenderer {
       g.closePath();
       g.fillPath();
 
-      // Trim neon pink
       g.lineStyle(2, p.trim, 1);
       g.beginPath();
       g.moveTo(Ex, Ey - h * 0.92);
       g.lineTo(Sx, Sy - h * 0.92);
       g.strokePath();
 
-      // Tombol
       g.fillStyle(p.btn, 1);
       g.fillEllipse(Ex - 10, Ey - h * 0.28, 6, 6);
       g.fillStyle(0x44ff44, 1);
@@ -953,13 +972,11 @@ class ObjectRenderer {
 
       const Ex = nx + w * HW, Ey = ny + w * HH;
 
-      // LED merah
       g.fillStyle(p.led, 1);
       g.fillEllipse(Ex - 7, Ey - h + 6, 4, 4);
       g.fillStyle(0xffaa00, 1);
       g.fillEllipse(Ex - 7, Ey - h + 12, 4, 4);
 
-      // Cangkir
       g.fillStyle(p.cup, 1);
       g.fillEllipse(Ex - 14, Ey - h + 5, 7, 4);
       g.fillStyle(0x8a4a20, 1);
