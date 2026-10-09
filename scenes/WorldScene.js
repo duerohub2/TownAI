@@ -13,10 +13,20 @@ class WorldScene extends Phaser.Scene {
     this.mapWidthPx = SIZE * TILE;
     this.mapHeightPx = SIZE * TILE;
 
+    // ===== AMBIL MAP DATA =====
+    let mapData = window.MAP_DATA;
+    if (!mapData && typeof MAP_DATA !== 'undefined') mapData = MAP_DATA;
+    if (!Array.isArray(mapData) || !Array.isArray(mapData[0])) {
+      console.warn('MAP_DATA gak kebaca, fallback ke grass semua');
+      mapData = [];
+      for (let y = 0; y < SIZE; y++) {
+        mapData[y] = [];
+        for (let x = 0; x < SIZE; x++) mapData[y][x] = 'grass';
+      }
+    }
+
     // ===== RENDER MAP =====
     this.tilesGroup = this.physics.add.staticGroup();
-
-    const mapData = window.MAP_DATA || [];
 
     for (let y = 0; y < SIZE; y++) {
       for (let x = 0; x < SIZE; x++) {
@@ -24,16 +34,18 @@ class WorldScene extends Phaser.Scene {
         const px = x * TILE + TILE / 2;
         const py = y * TILE + TILE / 2;
 
-        const tile = this.tilesGroup.create(px, py, type);
+        let tile;
+        try {
+          tile = this.tilesGroup.create(px, py, type);
+        } catch (e) {
+          tile = this.tilesGroup.create(px, py, 'grass');
+        }
         tile.setOrigin(0.5);
 
-        // tile yang solid (bisa ditabrak)
         if (type === 'house' || type === 'office' || type === 'market' || type === 'tree' || type === 'water') {
           tile.body.setSize(TILE, TILE);
           tile.refreshBody();
-          tile.setData('solid', true);
         } else {
-          // tile ground, gak solid — disable body biar gak makan resource
           tile.body.enable = false;
         }
       }
@@ -45,10 +57,9 @@ class WorldScene extends Phaser.Scene {
     this.player.setOffset(6, 8);
     this.player.setCollideWorldBounds(true);
     this.physics.world.setBounds(0, 0, this.mapWidthPx, this.mapHeightPx);
-
     this.physics.add.collider(this.player, this.tilesGroup);
 
-    // ===== NPC (contoh 6 NPC, posisi beda-beda) =====
+    // ===== NPC =====
     const npcData = [
       { key: 'npc_budi', x: 15, y: 50, name: 'Budi' },
       { key: 'npc_sari', x: 45, y: 10, name: 'Sari' },
@@ -76,44 +87,28 @@ class WorldScene extends Phaser.Scene {
     cam.setBackgroundColor(0x1a1a2e);
     cam.setZoom(1);
     cam.centerOn(this.player.x, this.player.y);
-
-    // follow player
     cam.startFollow(this.player, true, 0.08, 0.08);
 
-    // ===== INPUT KEYBOARD =====
+    // ===== KEYBOARD =====
     this.cursors = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
-      up: 'W', down: 'S', left: 'A', right: 'D',
-      space: 'SPACE'
+      up: 'W', down: 'S', left: 'A', right: 'D'
     });
 
-    // ===== ZOOM (pinch 2 jari) =====
-    let lastDist = 0;
-    this.input.on('pointermove', () => {
-      if (this.input.pointer1.isDown && this.input.pointer2.isDown) {
-        const p1 = this.input.pointer1;
-        const p2 = this.input.pointer2;
-        const dist = Phaser.Math.Distance.Between(p1.x, p1.y, p2.x, p2.y);
-        if (lastDist > 0) {
-          const delta = dist / lastDist;
-          const newZoom = Phaser.Math.Clamp(cam.zoom * delta, 0.5, 3);
-          cam.setZoom(newZoom);
-        }
-        lastDist = dist;
-      }
-    });
-    this.input.on('pointerup', () => { lastDist = 0; });
+    // ===== ZOOM via tombol =====
+    setTimeout(() => {
+      const zin = document.getElementById('zoom-in');
+      const zout = document.getElementById('zoom-out');
+      if (zin) zin.onclick = () => cam.setZoom(Phaser.Math.Clamp(cam.zoom + 0.2, 0.4, 3));
+      if (zout) zout.onclick = () => cam.setZoom(Phaser.Math.Clamp(cam.zoom - 0.2, 0.4, 3));
+    }, 100);
 
-    // ===== DRAG PAN (1 jari, cuma kalau bukan di joystick) =====
+    // ===== DRAG PAN =====
     let dragStart = null;
-    const joystickZone = () => {
-      const p = this.input.pointer1;
-      return p.x < 200 && p.y > cam.height - 200;
-    };
 
     this.input.on('pointerdown', (pointer) => {
-      if (this.input.pointer1.isDown && this.input.pointer2.isDown) return;
       if (pointer.x < 200 && pointer.y > cam.height - 200) return;
+      if (this.input.pointer1.isDown && this.input.pointer2.isDown) return;
       dragStart = {
         x: pointer.x,
         y: pointer.y,
@@ -137,17 +132,11 @@ class WorldScene extends Phaser.Scene {
       dragStart = null;
     });
 
-    // ===== SPACE = balik ke player =====
-    this.input.keyboard.on('keydown-SPACE', () => {
-      cam.startFollow(this.player, true, 0.1, 0.1);
-      cam.setZoom(1);
-    });
-
-    // ===== JOYSTICK VIRTUAL =====
+    // ===== JOYSTICK =====
     this.joystick = {
       active: false,
       baseX: 90,
-      baseY: cam.height - 90,
+      baseY: 0,
       pointerId: null,
       dx: 0,
       dy: 0
@@ -183,7 +172,7 @@ class WorldScene extends Phaser.Scene {
       }
     });
 
-    // ===== UI SCENE =====
+    // ===== UI =====
     this.scene.launch('UIScene', { worldScene: this });
   }
 
@@ -202,10 +191,7 @@ class WorldScene extends Phaser.Scene {
     }
 
     const len = Math.sqrt(vx * vx + vy * vy);
-    if (len > 1) {
-      vx /= len;
-      vy /= len;
-    }
+    if (len > 1) { vx /= len; vy /= len; }
 
     this.player.setVelocity(vx * speed, vy * speed);
   }
