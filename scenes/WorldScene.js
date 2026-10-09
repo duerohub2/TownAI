@@ -5,16 +5,29 @@ class WorldScene extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor('#15151f');
-
-    this.renderAllZones();       // lantai per-chunk
-    this.renderWalls();          // dinding keliling
-    this.renderAllObjects();     // objek per zona
+    try {
+      this.renderAllZones();
+      this.renderWalls();
+      this.renderAllObjects();
+    } catch (e) {
+      console.error('[WorldScene] init error:', e);
+      this.add.text(20, 20,
+        'ERROR: ' + (e && e.message ? e.message : String(e)),
+        {
+          fontFamily: 'monospace',
+          fontSize: '16px',
+          color: '#ff6666',
+          backgroundColor: '#000000',
+          padding: { x: 8, y: 6 }
+        }
+      ).setScrollFactor(0).setDepth(999999);
+    }
     this.setupCamera();
     this.setupInput();
   }
 
   // -------------------------------------------------------------
-  // Lantai per-chunk (dari STEP 1)
+  // Lantai per-chunk
   // -------------------------------------------------------------
 
   renderAllZones() {
@@ -126,8 +139,6 @@ class WorldScene extends Phaser.Scene {
     const D  = 0.1;
     const c  = window.PALETTE;
 
-    // --- Wall UTARA (gy = 0), membentang searah gx ---
-    // Box tipis: w=1, d=D, tinggi H. Face menghadap tenggara.
     {
       const w = 1, d = D, h = H;
       const width  = (w + d) * HW;
@@ -138,7 +149,6 @@ class WorldScene extends Phaser.Scene {
 
       const g = this.add.graphics();
       window.drawIsoBox(g, nx, ny, w, d, h, c.wallTop, c.wallLeft, c.wallRight);
-      // Trim atas (garis gelap)
       g.lineStyle(1, 0x2a1a0a, 0.6);
       g.beginPath();
       g.moveTo(nx, ny - h);
@@ -158,8 +168,6 @@ class WorldScene extends Phaser.Scene {
       }
     }
 
-    // --- Wall BARAT (gx = 0), membentang searah gy ---
-    // Box tipis: w=D, d=1, tinggi H. Face menghadap barat-daya.
     {
       const w = D, d = 1, h = H;
       const width  = (w + d) * HW;
@@ -189,8 +197,6 @@ class WorldScene extends Phaser.Scene {
       }
     }
 
-    // --- Wall TIMUR (gx = MAP_COLS) & SELATAN (gy = MAP_ROWS) ---
-    // Cuma border tipis (biar keliatan batas map, nggak nutupin view).
     {
       const w = 1, d = D, h = 6;
       const width  = (w + d) * HW;
@@ -239,8 +245,18 @@ class WorldScene extends Phaser.Scene {
     if (!info) return;
 
     const pos = window.isoToScreen(desc.gx, desc.gy);
-    const img = this.add.image(pos.x - info.offX, pos.y - info.offY, info.texKey);
-    img.setOrigin(0, 0);
+    const img = this.add.image(pos.x, pos.y, info.texKey);
+
+    const texW = img.width;
+    const texH = img.height;
+
+    // Set origin tepat di north corner base diamond (offX, offY di dalam texture).
+    // Dengan begini, sprite di-scale dari titik anchor grid — bukan dari top-left.
+    img.setOrigin(info.offX / texW, info.offY / texH);
+
+    // Scale global biar objek proporsional dengan luas map.
+    img.setScale(window.OBJ_SCALE);
+
     img.setDepth((desc.gx + desc.gy) * 100 + (desc.z || 0));
   }
 
