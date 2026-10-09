@@ -32,7 +32,20 @@ window.PALETTE = {
   bookshelf:  { top: 0x6a4a2a, left: 0x3a2a10, right: 0x5a3a1a, shelf: 0x2a1a08,
                 books: [0xb04040, 0x408040, 0x4040b0, 0xb0b040, 0xb06040, 0x40a0a0] },
   pool:       { water: 0x4a7ab0, waterDeep: 0x2a5a90, edge: 0x9a9a9a, edgeDark: 0x5a5a5a },
-  bush:       { top: 0x4a8a4a, left: 0x2a5a2a, right: 0x3a6a3a }
+  bush:       { top: 0x4a8a4a, left: 0x2a5a2a, right: 0x3a6a3a },
+
+  lamp:       { pole: 0x4a4a4a, poleDark: 0x2a2a2a, shade: 0xf0e0a0, shadeDark: 0xb8a060, glow: 0xffd880 },
+  flower:     { pot: 0x9a5a3a, potDark: 0x5a3010, leaf: 0x3a7a3a,
+                petals: [0xff6688, 0xffaa44, 0xff4488, 0xffee66, 0xaa66ff] },
+  bench:      { wood: 0x8b5a2b, woodDark: 0x5a3a10, leg: 0x3a2a10 },
+  fence:      { top: 0xa07a4a, left: 0x6a4a20, right: 0x8a6a3a },
+  sign:       { post: 0x5a3a20, postDark: 0x3a2010, board: 0xe8d8a8, boardDark: 0xa89060 },
+  trash:      { body: 0x4a4a4a, bodyDark: 0x2a2a2a, lid: 0x2a2a2a, trim: 0x6a6a6a },
+  arcade:     { body: 0x2a1a4a, bodyDark: 0x1a0a3a, bodyRight: 0x3a2a5a, screen: 0x4affaa, trim: 0xff44aa, btn: 0xff4444 },
+  cabinet:    { top: 0x8b5a2b, left: 0x5a3a10, right: 0x7a4a1a },
+  rug:        { border1: 0x8a2a2a, border2: 0xd4a060, fill: 0xc09050, fill2: 0xa07040 },
+  coffee:     { top: 0x3a3a4a, left: 0x1a1a2a, right: 0x2a2a3a, cup: 0xf0f0f0, led: 0xff4444 },
+  path:       { stone: 0xc0b090, stoneDark: 0x9a8a6a }
 };
 
 window.isoToScreen = function (gx, gy) {
@@ -87,12 +100,6 @@ window.getZonePixelBounds = function (zone) {
   return { minX, minY, width: maxX - minX, height: maxY - minY };
 };
 
-// ---------------------------------------------------------------
-// Iso drawing helpers
-// ---------------------------------------------------------------
-
-// Gambar 3D box isometric. Anchor (cx, cy) = posisi north corner dari BASE diamond.
-// w = lebar searah gx, d = kedalaman searah gy, h = tinggi pixel.
 window.drawIsoBox = function (g, cx, cy, w, d, h, topColor, leftColor, rightColor) {
   const HW = window.TILE_HW;
   const HH = window.TILE_HH;
@@ -102,7 +109,6 @@ window.drawIsoBox = function (g, cx, cy, w, d, h, topColor, leftColor, rightColo
   const Sx = cx + (w - d) * HW, Sy = cy + (w + d) * HH;
   const Wx = cx - d * HW,       Wy = cy + d * HH;
 
-  // Right face (E -> S -> S' -> E') — menghadap tenggara
   g.fillStyle(rightColor, 1);
   g.beginPath();
   g.moveTo(Ex, Ey);
@@ -112,7 +118,6 @@ window.drawIsoBox = function (g, cx, cy, w, d, h, topColor, leftColor, rightColo
   g.closePath();
   g.fillPath();
 
-  // Left face (W -> S -> S' -> W') — menghadap barat-daya
   g.fillStyle(leftColor, 1);
   g.beginPath();
   g.moveTo(Wx, Wy);
@@ -122,7 +127,6 @@ window.drawIsoBox = function (g, cx, cy, w, d, h, topColor, leftColor, rightColo
   g.closePath();
   g.fillPath();
 
-  // Top face (N' -> E' -> S' -> W')
   g.fillStyle(topColor, 1);
   g.beginPath();
   g.moveTo(Nx, Ny - h);
@@ -133,7 +137,6 @@ window.drawIsoBox = function (g, cx, cy, w, d, h, topColor, leftColor, rightColo
   g.fillPath();
 };
 
-// Diamond flat (tanpa tinggi)
 window.drawIsoDiamond = function (g, cx, cy, w, d, color) {
   const HW = window.TILE_HW;
   const HH = window.TILE_HH;
