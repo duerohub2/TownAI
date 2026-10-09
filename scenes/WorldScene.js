@@ -6,12 +6,16 @@ class WorldScene extends Phaser.Scene {
   create() {
     this.cameras.main.setBackgroundColor('#15151f');
 
-    this.renderAllZones();
+    this.renderAllZones();       // lantai per-chunk
+    this.renderWalls();          // dinding keliling
+    this.renderAllObjects();     // objek per zona
     this.setupCamera();
     this.setupInput();
   }
 
-  // ---------- Rendering ----------
+  // -------------------------------------------------------------
+  // Lantai per-chunk (dari STEP 1)
+  // -------------------------------------------------------------
 
   renderAllZones() {
     const zones = window.ZONE_CONFIG;
@@ -21,7 +25,7 @@ class WorldScene extends Phaser.Scene {
   }
 
   renderZoneChunked(zoneKey, zone) {
-    const CHUNK = 32; // tile per sisi chunk
+    const CHUNK = 32;
     const totalW = zone.x2 - zone.x1;
     const totalH = zone.y2 - zone.y1;
     const cols = Math.ceil(totalW / CHUNK);
@@ -51,7 +55,6 @@ class WorldScene extends Phaser.Scene {
     const xLast = x2 - 1;
     const yLast = y2 - 1;
 
-    // 4 sudut polygon zona/chunk (parallelogram di iso space)
     const P1x = (x1 - y1) * HW + HW,        P1y = (x1 + y1) * HH;
     const P2x = (xLast - y1) * HW + W,      P2y = (xLast + y1) * HH + HH;
     const P3x = (xLast - yLast) * HW + HW,  P3y = (xLast + yLast) * HH + H;
@@ -67,7 +70,6 @@ class WorldScene extends Phaser.Scene {
     const g = this.add.graphics();
     const color = window.FLOOR_COLORS[floor] || 0x808080;
 
-    // 1) Fill seluruh area zona pakai 1 polygon (super cepat)
     g.fillStyle(color, 1);
     g.beginPath();
     g.moveTo(P1x - minX, P1y - minY);
@@ -77,11 +79,8 @@ class WorldScene extends Phaser.Scene {
     g.closePath();
     g.fillPath();
 
-    // 2) Grid lines (garis tipis)
     g.lineStyle(1, 0x000000, 0.10);
 
-    // Garis kolom (gx tetap) — dari kiri-atas ke kanan-bawah
-    // Rentang: x1+1 .. x2 (inklusif) biar chunk bersebelahan gak nabrak
     for (let gx = x1 + 1; gx <= x2; gx++) {
       const gxc = gx - 1;
       const ax = (gxc - y1) * HW + W - minX;
@@ -94,7 +93,6 @@ class WorldScene extends Phaser.Scene {
       g.strokePath();
     }
 
-    // Garis baris (gy tetap) — dari kiri-atas ke kanan-bawah
     for (let gy = y1 + 1; gy <= y2; gy++) {
       const gyc = gy - 1;
       const ax = (x1 - gyc) * HW - minX;
@@ -117,7 +115,138 @@ class WorldScene extends Phaser.Scene {
     img.setDepth(-1000);
   }
 
-  // ---------- Kamera ----------
+  // -------------------------------------------------------------
+  // Dinding keliling
+  // -------------------------------------------------------------
+
+  renderWalls() {
+    const HW = window.TILE_HW;
+    const HH = window.TILE_HH;
+    const H  = 48;
+    const D  = 0.1;
+    const c  = window.PALETTE;
+
+    // --- Wall UTARA (gy = 0), membentang searah gx ---
+    // Box tipis: w=1, d=D, tinggi H. Face menghadap tenggara.
+    {
+      const w = 1, d = D, h = H;
+      const width  = (w + d) * HW;
+      const height = (w + d) * HH + h;
+      const nx = d * HW, ny = h;
+      const texKey = 'wall_n';
+      if (this.textures.exists(texKey)) this.textures.remove(texKey);
+
+      const g = this.add.graphics();
+      window.drawIsoBox(g, nx, ny, w, d, h, c.wallTop, c.wallLeft, c.wallRight);
+      // Trim atas (garis gelap)
+      g.lineStyle(1, 0x2a1a0a, 0.6);
+      g.beginPath();
+      g.moveTo(nx, ny - h);
+      g.lineTo(nx + w * HW, ny + w * HH - h);
+      g.lineTo(nx + (w - d) * HW, ny + (w + d) * HH - h);
+      g.lineTo(nx - d * HW, ny + d * HH - h);
+      g.closePath();
+      g.strokePath();
+      g.generateTexture(texKey, width, height);
+      g.destroy();
+
+      for (let gx = 0; gx < window.MAP_COLS; gx++) {
+        const pos = window.isoToScreen(gx, 0);
+        const img = this.add.image(pos.x - nx, pos.y - ny, texKey);
+        img.setOrigin(0, 0);
+        img.setDepth((gx + 0) * 100 - 40);
+      }
+    }
+
+    // --- Wall BARAT (gx = 0), membentang searah gy ---
+    // Box tipis: w=D, d=1, tinggi H. Face menghadap barat-daya.
+    {
+      const w = D, d = 1, h = H;
+      const width  = (w + d) * HW;
+      const height = (w + d) * HH + h;
+      const nx = d * HW, ny = h;
+      const texKey = 'wall_w';
+      if (this.textures.exists(texKey)) this.textures.remove(texKey);
+
+      const g = this.add.graphics();
+      window.drawIsoBox(g, nx, ny, w, d, h, c.wallTop, c.wallLeft, c.wallRight);
+      g.lineStyle(1, 0x2a1a0a, 0.6);
+      g.beginPath();
+      g.moveTo(nx, ny - h);
+      g.lineTo(nx + w * HW, ny + w * HH - h);
+      g.lineTo(nx + (w - d) * HW, ny + (w + d) * HH - h);
+      g.lineTo(nx - d * HW, ny + d * HH - h);
+      g.closePath();
+      g.strokePath();
+      g.generateTexture(texKey, width, height);
+      g.destroy();
+
+      for (let gy = 0; gy < window.MAP_ROWS; gy++) {
+        const pos = window.isoToScreen(0, gy);
+        const img = this.add.image(pos.x - nx, pos.y - ny, texKey);
+        img.setOrigin(0, 0);
+        img.setDepth((0 + gy) * 100 - 40);
+      }
+    }
+
+    // --- Wall TIMUR (gx = MAP_COLS) & SELATAN (gy = MAP_ROWS) ---
+    // Cuma border tipis (biar keliatan batas map, nggak nutupin view).
+    {
+      const w = 1, d = D, h = 6;
+      const width  = (w + d) * HW;
+      const height = (w + d) * HH + h;
+      const nx = d * HW, ny = h;
+      const texKey = 'wall_border';
+      if (this.textures.exists(texKey)) this.textures.remove(texKey);
+      const g = this.add.graphics();
+      window.drawIsoBox(g, nx, ny, w, d, h, c.wallTop, c.wallLeft, c.wallRight);
+      g.generateTexture(texKey, width, height);
+      g.destroy();
+
+      for (let gy = 0; gy < window.MAP_ROWS; gy++) {
+        const pos = window.isoToScreen(window.MAP_COLS - 1, gy);
+        const img = this.add.image(pos.x - nx, pos.y - ny, texKey);
+        img.setOrigin(0, 0);
+        img.setDepth((window.MAP_COLS - 1 + gy) * 100 - 40);
+      }
+      for (let gx = 0; gx < window.MAP_COLS; gx++) {
+        const pos = window.isoToScreen(gx, window.MAP_ROWS - 1);
+        const img = this.add.image(pos.x - nx, pos.y - ny, texKey);
+        img.setOrigin(0, 0);
+        img.setDepth((gx + window.MAP_ROWS - 1) * 100 - 40);
+      }
+    }
+  }
+
+  // -------------------------------------------------------------
+  // Objek
+  // -------------------------------------------------------------
+
+  renderAllObjects() {
+    const renderer = new ObjectRenderer(this);
+    this.objectRenderer = renderer;
+
+    const config = window.OBJECT_CONFIG;
+    for (const zoneKey in config) {
+      for (const desc of config[zoneKey]) {
+        this.placeObject(renderer, desc);
+      }
+    }
+  }
+
+  placeObject(renderer, desc) {
+    const info = renderer.render(desc);
+    if (!info) return;
+
+    const pos = window.isoToScreen(desc.gx, desc.gy);
+    const img = this.add.image(pos.x - info.offX, pos.y - info.offY, info.texKey);
+    img.setOrigin(0, 0);
+    img.setDepth((desc.gx + desc.gy) * 100 + (desc.z || 0));
+  }
+
+  // -------------------------------------------------------------
+  // Kamera & input
+  // -------------------------------------------------------------
 
   setupCamera() {
     const cam = this.cameras.main;
@@ -131,13 +260,11 @@ class WorldScene extends Phaser.Scene {
   setupInput() {
     const cam = this.cameras.main;
 
-    // Wheel zoom (desktop)
     this.input.on('wheel', (p, over, dx, dy) => {
       const z = Phaser.Math.Clamp(cam.zoom - dy * 0.001, 0.08, 2);
       cam.setZoom(z);
     });
 
-    // Keyboard pan
     this.keys = this.input.keyboard.addKeys({
       up:     Phaser.Input.Keyboard.KeyCodes.W,
       down:   Phaser.Input.Keyboard.KeyCodes.S,
@@ -149,7 +276,6 @@ class WorldScene extends Phaser.Scene {
       right2: Phaser.Input.Keyboard.KeyCodes.RIGHT
     });
 
-    // SPACE = reset
     this.input.keyboard.on('keydown-SPACE', () => {
       const b = window.getMapBounds();
       cam.centerOn((b.minX + b.maxX) / 2, (b.minY + b.maxY) / 2);
@@ -160,14 +286,11 @@ class WorldScene extends Phaser.Scene {
     this._pinchDist = 0;
   }
 
-  // ---------- Update loop ----------
-
   update(_time, _delta) {
     const cam = this.cameras.main;
     const ptrs = this.input.manager.pointers.filter(p => p.isDown);
 
     if (ptrs.length >= 2) {
-      // Pinch zoom
       const a = ptrs[0], b = ptrs[1];
       const dist = Phaser.Math.Distance.Between(a.x, a.y, b.x, b.y);
       if (this._pinchDist > 0) {
@@ -177,7 +300,6 @@ class WorldScene extends Phaser.Scene {
       this._pinchDist = dist;
       this._drag = null;
     } else if (ptrs.length === 1) {
-      // Pan 1 jari
       this._pinchDist = 0;
       const p = ptrs[0];
       if (!this._drag || this._drag.pointer !== p) {
@@ -197,7 +319,6 @@ class WorldScene extends Phaser.Scene {
       this._drag = null;
     }
 
-    // Keyboard pan
     const k = this.keys;
     if (k) {
       const speed = 12 / cam.zoom;
