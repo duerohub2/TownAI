@@ -1,12 +1,25 @@
-// Konfigurasi Phaser
-const GAME_CONFIG = {
+window.gameConfig = {
   type: Phaser.AUTO,
   parent: 'game',
-  backgroundColor: '#0e1116',
-  pixelArt: true,
-  scale: { mode: Phaser.Scale.RESIZE, width: '100%', height: '100%' },
-  physics: { default: 'arcade', arcade: { debug: false } },
-  // crossOrigin wajib untuk gambar dari domain lain; batasi download paralel agar tidak kena rate limit
-  loader: { crossOrigin: 'anonymous', maxParallelDownloads: 4, timeout: 20000 },
-  scene: [PreloadScene, WorldScene, UIScene]
+  backgroundColor: '#15151f',
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: '100%',
+    height: '100%'
+  },
+  render: {
+    antialias: true,
+    pixelArt: false,
+    roundPixels: false,
+    powerPreference: 'high-performance'
+  },
+  input: {
+    activePointers: 3
+  },
+  fps: {
+    target: 60,
+    min: 30
+  },
+  scene: [PreloadScene, WorldScene]
 };
