@@ -5,9 +5,9 @@ window.TILE_HH = 16;
 window.MAP_COLS = 128;
 window.MAP_ROWS = 96;
 
-// Multiplier ukuran objek (meja, pohon, sofa, dll).
-// Naikkan kalau masih kerasa kecil, turunkan kalau overlap.
-window.OBJ_SCALE = 1.6;
+// Multiplier ukuran objek BERDIRI (meja, kursi, pohon, dll).
+// Objek lantai (rug, path, pool) di-skip via desc.flat.
+window.OBJ_SCALE = 2.6;
 
 window.FLOOR_COLORS = {
   wood_light:    0xd4b088,
