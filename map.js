@@ -5,6 +5,10 @@ window.TILE_HH = 16;
 window.MAP_COLS = 128;
 window.MAP_ROWS = 96;
 
+// Multiplier ukuran objek (meja, pohon, sofa, dll).
+// Naikkan kalau masih kerasa kecil, turunkan kalau overlap.
+window.OBJ_SCALE = 1.6;
+
 window.FLOOR_COLORS = {
   wood_light:    0xd4b088,
   carpet_gray:   0x6a6a7a,
