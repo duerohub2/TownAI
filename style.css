@@ -2,6 +2,11 @@ html, body {
   margin: 0; height: 100%; overflow: hidden;
   background: #0e1116;
   font-family: "Consolas", "Menlo", "Courier New", monospace;
+  /* Cegah scroll, zoom, dan menu long-press di iOS */
+  touch-action: none;
+  -webkit-user-select: none; user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 #game { position: fixed; inset: 0; }
 #game canvas { display: block; }
@@ -27,4 +32,33 @@ html, body {
   padding: 6px 12px; font-size: 12px; color: #94a3b8;
   background: rgba(14, 17, 22, 0.85);
   border: 1px solid #2a313c;
+}
+
+/* Joystick: pojok kiri bawah, menghormati safe area iPhone */
+#joy-base {
+  position: absolute;
+  left: calc(20px + env(safe-area-inset-left, 0px));
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(14, 17, 22, 0.6);
+  border: 1px solid #2a313c;
+  pointer-events: auto;   /* HUD lain tidak menerima sentuhan, joystick ya */
+  touch-action: none;
+}
+#joy-knob {
+  position: absolute; left: 50%; top: 50%;
+  width: 50px; height: 50px; margin: -25px 0 0 -25px;
+  border-radius: 50%;
+  background: rgba(203, 213, 225, 0.35);
+  border: 1px solid #94a3b8;
+  pointer-events: none;
+}
+
+/* Di layar sentuh, hint pindah ke kanan bawah agar tidak menabrak joystick */
+@media (pointer: coarse) {
+  #hint {
+    left: auto; transform: none;
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
 }
