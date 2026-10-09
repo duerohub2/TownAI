@@ -2,8 +2,8 @@ window.TILE_W  = 64;
 window.TILE_H  = 32;
 window.TILE_HW = 32;
 window.TILE_HH = 16;
-window.MAP_COLS = 80;
-window.MAP_ROWS = 60;
+window.MAP_COLS = 128;
+window.MAP_ROWS = 96;
 
 window.FLOOR_COLORS = {
   wood_light:    0xd4b088,
