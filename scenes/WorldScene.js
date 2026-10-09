@@ -26,7 +26,7 @@ class WorldScene extends Phaser.Scene {
     this.player.body.setSize(22, 22, true); // hitbox sedikit lebih kecil agar lolos celah 1 tile
     this.physics.add.collider(this.player, this.solids);
 
-    // Input: arrow keys + WASD
+    // Input: arrow keys + WASD (joystick dibaca lewat objek global JOY)
     this.cursors = this.input.keyboard.createCursorKeys();
     this.wasd = this.input.keyboard.addKeys('W,A,S,D');
 
@@ -42,7 +42,16 @@ class WorldScene extends Phaser.Scene {
     const c = this.cursors, k = this.wasd;
     const dx = (c.right.isDown || k.D.isDown ? 1 : 0) - (c.left.isDown || k.A.isDown ? 1 : 0);
     const dy = (c.down.isDown || k.S.isDown ? 1 : 0) - (c.up.isDown || k.W.isDown ? 1 : 0);
-    // Normalisasi supaya gerak diagonal tidak lebih cepat
-    this.player.body.setVelocity(dx, dy).normalize().scale(PLAYER_SPEED);
+    const body = this.player.body;
+
+    if (dx !== 0 || dy !== 0) {
+      // Keyboard: normalisasi supaya diagonal tidak lebih cepat
+      body.setVelocity(dx, dy).normalize().scale(PLAYER_SPEED);
+    } else if (JOY.x !== 0 || JOY.y !== 0) {
+      // Joystick: analog, makin jauh digeser makin cepat (maksimum PLAYER_SPEED)
+      body.setVelocity(JOY.x * PLAYER_SPEED, JOY.y * PLAYER_SPEED);
+    } else {
+      body.setVelocity(0, 0);
+    }
   }
 }
