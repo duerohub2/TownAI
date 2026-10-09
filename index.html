@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AI World</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#15151f">
+<title>AI World</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="zoom-controls">
-    <button id="zoom-in">+</button>
-    <button id="zoom-out">−</button>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
-  <script src="config.js"></script>
-  <script src="map.js"></script>
-  <script src="scenes/PreloadScene.js"></script>
-  <script src="scenes/WorldScene.js"></script>
-  <script src="scenes/UIScene.js"></script>
-  <script src="main.js"></script>
+<div id="game"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+
+<script src="data/zone_config.js"></script>
+<script src="scenes/PreloadScene.js"></script>
+<script src="scenes/WorldScene.js"></script>
+<script src="map.js"></script>
+<script src="config.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
