@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "checks": [
+    {
+      "kind": "scene",
+      "path": "res://test/mvp_test.tscn",
+      "expect": "[ai-living-city-tests] PASS:",
+      "profile": "source"
+    }
+  ]
+}
