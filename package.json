@@ -8,7 +8,7 @@
     "verify:clean": "./tools/verify_clean_scaffold.sh",
     "export": "mkdir -p dist && godot --headless --path . --export-release Web dist/index.html",
     "dev": "node scripts/manus/runtime-command.cjs ./server.mjs",
-    "build": "node scripts/manus/runtime-command.cjs ./build.mjs",
+    "build": "node scripts/vercel-build.cjs",
     "preview:build": "node scripts/manus/runtime-command.cjs ./preview-build.mjs",
     "preview:status": "node scripts/manus/runtime-command.cjs ./preview-build.mjs --status",
     "doctor": "node scripts/manus/runtime-command.cjs ./doctor.mjs",
