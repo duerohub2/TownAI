@@ -3,7 +3,7 @@
   "engineVersion": "4.7.2.stable.official.ed1daf0bf",
   "inputs": {
     "objectFormat": "sha1",
-    "tree": "f986fd3432d5aa2eb947f2c924ff855b83f7b1b4",
+    "tree": "08e6d6bac21230f38b6cf54291afa12033328cd1",
     "entries": [
       {
         "path": ".gitignore",
@@ -33,13 +33,13 @@
         "path": "TODO.md",
         "type": "file",
         "mode": "100644",
-        "object": "4ad1b88ce61481ee3ea8dfbac7659cbf062aa2af"
+        "object": "e3effed101f134227c44c9cb23e8d1025b9d2649"
       },
       {
         "path": "assets.lock.json",
         "type": "file",
         "mode": "100644",
-        "object": "13312e81738b2abcced718507398de6615a198b9"
+        "object": "143e123db68180a60149ae441d166886b72e0ff9"
       },
       {
         "path": "assets/template/characters/runner.png",
@@ -315,6 +315,369 @@
         "object": "674fd8f2d827f90b76f74f7b881e31dbf12a36ad"
       },
       {
+        "path": "assets/user/ai_living_city/ai_living_system.png",
+        "type": "managed",
+        "sha256": "sha256:596a3b5a81f85e4a9d2073d749e0ac2a889d40b623c4218fb2ed4243d7acc253"
+      },
+      {
+        "path": "assets/user/ai_living_city/ai_living_system.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "5cfdebb6ab0fc051e20ef4fa7c72b7902e2c0e85"
+      },
+      {
+        "path": "assets/user/ai_living_city/animal_chicken.png",
+        "type": "managed",
+        "sha256": "sha256:fa4aad95b3663bb562e5a975bf9a55f2447dcd68f645ecad19162cc775085b19"
+      },
+      {
+        "path": "assets/user/ai_living_city/animal_chicken.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "90b321ff58ca64de7225fc2a0441733764bb9c00"
+      },
+      {
+        "path": "assets/user/ai_living_city/animal_dog.png",
+        "type": "managed",
+        "sha256": "sha256:7a4efdbca771f2bc1983928b2ddabcfe43c4f9a6ba869776d2089216378541dc"
+      },
+      {
+        "path": "assets/user/ai_living_city/animal_dog.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "cd70548d50c6caeb633f4e15d658ee1b1d9980d1"
+      },
+      {
+        "path": "assets/user/ai_living_city/animals.png",
+        "type": "managed",
+        "sha256": "sha256:cb7c38582fbe5bf32f3b198b892734036abc3d356d3262b7c8d517bca57b9ed8"
+      },
+      {
+        "path": "assets/user/ai_living_city/animals.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "b56b0ae737a7979688b443444c125181e15a9b54"
+      },
+      {
+        "path": "assets/user/ai_living_city/animation_sprites.png",
+        "type": "managed",
+        "sha256": "sha256:881c383e1801eb6f6d0d87244d93effe767d4e6e1b1271e83fd047c1594d2d61"
+      },
+      {
+        "path": "assets/user/ai_living_city/animation_sprites.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "2f08fd3098e3b592ea7d4b806fccf0209c39f211"
+      },
+      {
+        "path": "assets/user/ai_living_city/building_parts.png",
+        "type": "managed",
+        "sha256": "sha256:77e58c9a21434bd73a196c6a7bda90ac15b65bd521e3a5b5fbee7ba8da245429"
+      },
+      {
+        "path": "assets/user/ai_living_city/building_parts.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "eeb62f77cfead86be41a4384baf59b1951148cb1"
+      },
+      {
+        "path": "assets/user/ai_living_city/buildings.png",
+        "type": "managed",
+        "sha256": "sha256:f2f61ed75ccb50568f3923da658c7cad28b9c4c04151118a7e89f250e48f29df"
+      },
+      {
+        "path": "assets/user/ai_living_city/buildings.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "b846c9be7f00836dd9319541bc8ff9292b6f497d"
+      },
+      {
+        "path": "assets/user/ai_living_city/character_adventurer.png",
+        "type": "managed",
+        "sha256": "sha256:34693f2352cd14e8d965726985589c59f7e7d4d805f0f89ed57ba501d9c85d27"
+      },
+      {
+        "path": "assets/user/ai_living_city/character_adventurer.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "a3614c6de3291061e316c927f40e094142b7c2f9"
+      },
+      {
+        "path": "assets/user/ai_living_city/character_doctor.png",
+        "type": "managed",
+        "sha256": "sha256:914b71186322190adf23a5713631b02daf399326ceefd776746fafe8ea4111f9"
+      },
+      {
+        "path": "assets/user/ai_living_city/character_doctor.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "d0a418b4c36a6d22067ec0f76ee19a8db6988d5a"
+      },
+      {
+        "path": "assets/user/ai_living_city/character_farmer.png",
+        "type": "managed",
+        "sha256": "sha256:f0df8e5461ec5dc3b63b687cd1484944c20f3af02740be6122ea4cf8fef1cb33"
+      },
+      {
+        "path": "assets/user/ai_living_city/character_farmer.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "49696a893c786e6f0406c8018f7fccf777301105"
+      },
+      {
+        "path": "assets/user/ai_living_city/character_player_avatar.png",
+        "type": "managed",
+        "sha256": "sha256:fc8634167df47455f65ce8de5b951136d4ded43a5549a7685a57479b2f1f6401"
+      },
+      {
+        "path": "assets/user/ai_living_city/character_player_avatar.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "577ebc5548bbd7f1934157e84eb30cfd2b87fa2a"
+      },
+      {
+        "path": "assets/user/ai_living_city/characters.png",
+        "type": "managed",
+        "sha256": "sha256:de603ca95dbf7df068ad8558d40c1a4bfb4283eee5572aa68f20b15494148e14"
+      },
+      {
+        "path": "assets/user/ai_living_city/characters.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "0eedc104a27f9c477f67ca773bf539589ef4ea59"
+      },
+      {
+        "path": "assets/user/ai_living_city/civic_tower.png",
+        "type": "managed",
+        "sha256": "sha256:bb8d2538116c9abd1df28a92c290932b124545317087609aeb8a5aa59a31c7a4"
+      },
+      {
+        "path": "assets/user/ai_living_city/civic_tower.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "a288b03dbb5f1b14b6a2b6c70dbe8ba4bb5be448"
+      },
+      {
+        "path": "assets/user/ai_living_city/crystal_blue.png",
+        "type": "managed",
+        "sha256": "sha256:77d603f9a2961179e8bef824b284d5f95f40535b87fe2344a1d590c3f66a6b23"
+      },
+      {
+        "path": "assets/user/ai_living_city/crystal_blue.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "754c85c3da4687b4cde31aa191494848622e9e71"
+      },
+      {
+        "path": "assets/user/ai_living_city/economy_business.png",
+        "type": "managed",
+        "sha256": "sha256:ff3c69c284c47f65fb97546296ffcf952df3103532dd2cb261334acf2a99f7cd"
+      },
+      {
+        "path": "assets/user/ai_living_city/economy_business.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "1d3836b171c2fbfaa6f0d5832393ddc387632b3b"
+      },
+      {
+        "path": "assets/user/ai_living_city/effects.png",
+        "type": "managed",
+        "sha256": "sha256:67ce8a09b63fcbd2d449c4e86ee8305d05406a1e5b8a86f76d588ad03be0ff3e"
+      },
+      {
+        "path": "assets/user/ai_living_city/effects.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "4dd0749d4253bfdd07911587e839e94b0e825dbc"
+      },
+      {
+        "path": "assets/user/ai_living_city/equipment.png",
+        "type": "managed",
+        "sha256": "sha256:86639c86ed0b5e1dcb48f9c55c2ac85cedff35e45641b3f841bd915c31fdd091"
+      },
+      {
+        "path": "assets/user/ai_living_city/equipment.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "a8187321a00a104ff7f0a3f6b7b6267bd8a58f16"
+      },
+      {
+        "path": "assets/user/ai_living_city/fountain.png",
+        "type": "managed",
+        "sha256": "sha256:4ee2934c42ec78d88e04bdaf95a1360bcd50230368b775474428f75c185dfd69"
+      },
+      {
+        "path": "assets/user/ai_living_city/fountain.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "b5bef21cfdc5297d17bb36eb0245a7e8586b01e7"
+      },
+      {
+        "path": "assets/user/ai_living_city/furniture_interior.png",
+        "type": "managed",
+        "sha256": "sha256:12f15904bbc6c1017a78e2ca17fe5cad4327b8453c500d9f381ca74476b3d446"
+      },
+      {
+        "path": "assets/user/ai_living_city/furniture_interior.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "38dc6d79ecc46d09226967f1ede794d581b037f0"
+      },
+      {
+        "path": "assets/user/ai_living_city/government_community.png",
+        "type": "managed",
+        "sha256": "sha256:8f6608d970ad975fff6139d294da7d930829b37ff4de6224a957711811be9d81"
+      },
+      {
+        "path": "assets/user/ai_living_city/government_community.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "9e207871724e32b7a72f2ae060fe93875dfec345"
+      },
+      {
+        "path": "assets/user/ai_living_city/house_blue_roof.png",
+        "type": "managed",
+        "sha256": "sha256:a938f62fc7bb50b4a6f4698ab5eb396fecf38046f962b130a095aca217e20d41"
+      },
+      {
+        "path": "assets/user/ai_living_city/house_blue_roof.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "5ae1983753791c8e327585efb6903a0a223d676a"
+      },
+      {
+        "path": "assets/user/ai_living_city/house_red_roof.png",
+        "type": "managed",
+        "sha256": "sha256:d7b0becf3522e3691e65d0c4b93277dce1b9a322b72032252ffaa911ac95ae7b"
+      },
+      {
+        "path": "assets/user/ai_living_city/house_red_roof.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "467d818416e1d60b8ad4c7b28a8e975ac0d77cc7"
+      },
+      {
+        "path": "assets/user/ai_living_city/market_stall.png",
+        "type": "managed",
+        "sha256": "sha256:7da34abe01e4b0e05768145ff9a05935f8d2069dea846e7c2185024dc8ad41fd"
+      },
+      {
+        "path": "assets/user/ai_living_city/market_stall.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "9b3d29a16aceaf8d095c88a26c156ecbf0594864"
+      },
+      {
+        "path": "assets/user/ai_living_city/nature.png",
+        "type": "managed",
+        "sha256": "sha256:b001accc18cf6534d43de00ddf6ebd3fb77dc12403862b8b9fc9c92c485831c0"
+      },
+      {
+        "path": "assets/user/ai_living_city/nature.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "d0c07b02b3fc2678b0d757632b8ef26371b3b217"
+      },
+      {
+        "path": "assets/user/ai_living_city/shop_red_awning.png",
+        "type": "managed",
+        "sha256": "sha256:48e3dd520c84c053f4d909448b14d6cf0cf5e82b77e9f7444e8c2582ebf824d9"
+      },
+      {
+        "path": "assets/user/ai_living_city/shop_red_awning.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "0a8dd5b4e296600f651dbc6ce358d0c869a737c5"
+      },
+      {
+        "path": "assets/user/ai_living_city/source_master.png",
+        "type": "managed",
+        "sha256": "sha256:19ddb03caf590bdcf96207e3d943570c2fae78223e19d9a79dd780a6fbacbefe"
+      },
+      {
+        "path": "assets/user/ai_living_city/source_master.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "6c3d3066c5e822042194bdca2d11d60b9a569374"
+      },
+      {
+        "path": "assets/user/ai_living_city/street_lamp.png",
+        "type": "managed",
+        "sha256": "sha256:6826949cc3efad755b6df423f2e63c011ef9b457203a5538eaa5f5121f6ca293"
+      },
+      {
+        "path": "assets/user/ai_living_city/street_lamp.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "75895dd2d610d9d4be9c3fd436a7d73630af37ea"
+      },
+      {
+        "path": "assets/user/ai_living_city/street_objects.png",
+        "type": "managed",
+        "sha256": "sha256:6503e4a801ad412f84e94e14c999b98071367fba3ff2960b0a7584666d0f48de"
+      },
+      {
+        "path": "assets/user/ai_living_city/street_objects.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "e41a1b9b52556ce7146c6f62c79b64a72caff943"
+      },
+      {
+        "path": "assets/user/ai_living_city/terrain_tiles.png",
+        "type": "managed",
+        "sha256": "sha256:da801be5e3592e87d96c9712d6686991ad4da4548cc2a4da2bbc719ae6d2f4c0"
+      },
+      {
+        "path": "assets/user/ai_living_city/terrain_tiles.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "d79408f3efeda55503d9011c53c52aa0fc4e5bf0"
+      },
+      {
+        "path": "assets/user/ai_living_city/tree_broadleaf.png",
+        "type": "managed",
+        "sha256": "sha256:78839fd239600eadd28d9322e3eb1215505f3f07c804ee8eb71ee112f960131d"
+      },
+      {
+        "path": "assets/user/ai_living_city/tree_broadleaf.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "37447c455d3e811f09cfbe9975c42d2720270da3"
+      },
+      {
+        "path": "assets/user/ai_living_city/tree_evergreen.png",
+        "type": "managed",
+        "sha256": "sha256:39714ec0925f70654541eb05db3bcd3c484a5026d8f5995d85b9472614db2b9a"
+      },
+      {
+        "path": "assets/user/ai_living_city/tree_evergreen.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "3790709961e73cf30c105f4b81a0c4ca8c1e796e"
+      },
+      {
+        "path": "assets/user/ai_living_city/tree_flowering.png",
+        "type": "managed",
+        "sha256": "sha256:2566261a6d26aeb43826c76f1b5b74885ee930495da24d46ff5158263746dba1"
+      },
+      {
+        "path": "assets/user/ai_living_city/tree_flowering.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "dfe4d141448a8b3a4d220558d4a13386b541433b"
+      },
+      {
+        "path": "assets/user/ai_living_city/ui_game_assets.png",
+        "type": "managed",
+        "sha256": "sha256:bcc3426d126d1a6ac009ed57c788c02f775851a3938d6e96ddb27eaa9c1b1e58"
+      },
+      {
+        "path": "assets/user/ai_living_city/ui_game_assets.png.import",
+        "type": "file",
+        "mode": "100644",
+        "object": "95686470d78ddf32c9c6664bfdd6816fff7d1156"
+      },
+      {
         "path": "autoload/audio_director.gd",
         "type": "file",
         "mode": "100644",
@@ -432,19 +795,19 @@
         "path": "package.json",
         "type": "file",
         "mode": "100644",
-        "object": "7fdb8d6e36ba84d4057355994f73582b2ca91840"
+        "object": "a2e3b4d3bb7cdbf52c090d2f26135f55eb0cb6e8"
       },
       {
         "path": "plan.md",
         "type": "file",
         "mode": "100644",
-        "object": "b810f4fc32c52949c6f4cd75440e4d9b95866ed6"
+        "object": "a457565098ac71619b3651ba32c01989c2089cca"
       },
       {
         "path": "project.godot",
         "type": "file",
         "mode": "100644",
-        "object": "9d1ccbc11f475200658e694d1024c16da3a38022"
+        "object": "61374326a0fcf4cbbd12449a593034101405e637"
       },
       {
         "path": "scenes/main.tscn",
@@ -456,7 +819,7 @@
         "path": "scripts/city_map.gd",
         "type": "file",
         "mode": "100644",
-        "object": "40cef3d0eb53ce2857c47139141a92ffdc711ba6"
+        "object": "98233f66f51c26c8dc8e79a8a06a2296ee28a82f"
       },
       {
         "path": "scripts/city_map.gd.uid",
@@ -528,7 +891,7 @@
         "path": "scripts/game_state.gd",
         "type": "file",
         "mode": "100644",
-        "object": "b9c96576c85684479d985f0484350186eed2ee03"
+        "object": "00db9cc23608543e82ed5f28cb8b8e92372f7b9a"
       },
       {
         "path": "scripts/game_state.gd.uid",
@@ -540,7 +903,7 @@
         "path": "scripts/main.gd",
         "type": "file",
         "mode": "100644",
-        "object": "92a8e88cf6b7209fb6315f4a22c1fd624d049008"
+        "object": "85c81fe43697fe975083a2e498676032d3673ca9"
       },
       {
         "path": "scripts/main.gd.uid",
@@ -711,6 +1074,12 @@
         "object": "d1c0191a2950f75818df9e3b42844bf91e7c4f5d"
       },
       {
+        "path": "scripts/vercel-build.cjs",
+        "type": "file",
+        "mode": "100644",
+        "object": "4e32ce78936e7851de40aa87cb7f6e3b686fbcad"
+      },
+      {
         "path": "shaders/arcade_filter.gdshader",
         "type": "file",
         "mode": "100644",
@@ -867,6 +1236,18 @@
         "object": "28de478c5dd3ba4e09d7f3241957772cf4c3f1a3"
       },
       {
+        "path": "tools/prepare_vercel_site.py",
+        "type": "file",
+        "mode": "100644",
+        "object": "97abd860d9ef2cd9645d2cf2c8aaa58bca5afb0e"
+      },
+      {
+        "path": "tools/slice_user_assets.py",
+        "type": "file",
+        "mode": "100644",
+        "object": "10258d9bbca478c73b02effab1e622723bddccd9"
+      },
+      {
         "path": "tools/verify.sh",
         "type": "file",
         "mode": "100755",
@@ -891,6 +1272,12 @@
         "object": "da1eb24aff4da704f73c864031593b0d247e6f96"
       },
       {
+        "path": "vercel.json",
+        "type": "file",
+        "mode": "100644",
+        "object": "ff25cb61cb0d982e36199c2ed1220a46fc3a245e"
+      },
+      {
         "path": "web/loader-cjk.json",
         "type": "file",
         "mode": "100644",
@@ -905,7 +1292,7 @@
     ]
   },
   "build": {
-    "snapshotId": "sha256:f429368c6567868af4aac7c4530446740e02714f7b701374d622a9793b66a8a4",
+    "snapshotId": "sha256:d003e79280f4ab5e2563ae6d9655390cdade4d23e035e797f1da5e80c5447f40",
     "toolchain": {
       "engineVersion": "4.7.2.stable.official.ed1daf0bf",
       "engineDigest": "sha256:8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
@@ -918,21 +1305,21 @@
     "profile": "release",
     "export": {
       "profile": "release",
-      "snapshotId": "sha256:f429368c6567868af4aac7c4530446740e02714f7b701374d622a9793b66a8a4",
+      "snapshotId": "sha256:d003e79280f4ab5e2563ae6d9655390cdade4d23e035e797f1da5e80c5447f40",
       "files": {
         "THIRD_PARTY_NOTICES.txt": "sha256:c729a77bf07eb9745b2d89c3ce4ead3357438366f41743d2755ae35f98509cf9",
         "index.apple-touch-icon.png": "sha256:223ba4214aa892c363acf1d673904d77262a586cc66ff0adf75128f85e931e88",
         "index.audio.position.worklet.js": "sha256:be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8",
         "index.audio.worklet.js": "sha256:5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
-        "index.html": "sha256:001fe541da7bd7fcec2654d040ff665b3bade62b73f6769a8a8fc98f94299435",
+        "index.html": "sha256:87318c17f895be94e592bf41f6cfba273b1a5ae444e97414f4c96f3a2e579749",
         "index.icon.png": "sha256:24e35756331a1621216bb32813dc7899b8bd94bc28e2cdca264d00c855d34768",
         "index.js": "sha256:cb28c2d8ffd8981888823f1b6d98cdec4e3e11adf209ad556c22878e6d51c63a",
-        "index.pck": "sha256:314e89cd36e02631349f5df4a89ad1ce2467792d4a6d0e9e8bc62d9b756befb3",
+        "index.pck": "sha256:c42bab7733c529370393f163dba99d4a0c12e3b91ea70fb7dbe5c2e64b9c4c9a",
         "index.png": "sha256:3cb4495c0b98dfbe4b663cbf2b6836473572339beb66d902367893162a70be0e",
         "index.wasm": "sha256:fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
         "open-source-licenses.html": "sha256:9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
       },
-      "digest": "sha256:b24fc5ac6dd5f63e8b697a0f21e67d566eafdd361a1965424fbdda8634d1eebc"
+      "digest": "sha256:78502b8fc1ddc9ebf2b3ea9a3422365d5a71fd4cf47e423821b411482cf0405f"
     }
   },
   "artifacts": {
@@ -941,8 +1328,8 @@
       "sha256": "sha256:fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
     },
     "pck": {
-      "path": "/manus-storage/game/sha256/314e89cd36e02631349f5df4a89ad1ce2467792d4a6d0e9e8bc62d9b756befb3.pck",
-      "sha256": "sha256:314e89cd36e02631349f5df4a89ad1ce2467792d4a6d0e9e8bc62d9b756befb3"
+      "path": "/manus-storage/game/sha256/c42bab7733c529370393f163dba99d4a0c12e3b91ea70fb7dbe5c2e64b9c4c9a.pck",
+      "sha256": "sha256:c42bab7733c529370393f163dba99d4a0c12e3b91ea70fb7dbe5c2e64b9c4c9a"
     }
   },
   "files": {
@@ -951,7 +1338,7 @@
     "index.apple-touch-icon.png": "sha256:223ba4214aa892c363acf1d673904d77262a586cc66ff0adf75128f85e931e88",
     "index.audio.position.worklet.js": "sha256:be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8",
     "index.audio.worklet.js": "sha256:5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
-    "index.html": "sha256:eabcd6b3ac62a62076bb6163394560d6d6c8def0eb728276e831bc4b2c6901c3",
+    "index.html": "sha256:0fa77be504eb692f6d587d63449c6fdd9bd911c7b14914de2d0bba8b9cf8702e",
     "index.icon.png": "sha256:24e35756331a1621216bb32813dc7899b8bd94bc28e2cdca264d00c855d34768",
     "index.js": "sha256:cb28c2d8ffd8981888823f1b6d98cdec4e3e11adf209ad556c22878e6d51c63a",
     "index.png": "sha256:3cb4495c0b98dfbe4b663cbf2b6836473572339beb66d902367893162a70be0e",

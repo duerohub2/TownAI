@@ -9,17 +9,26 @@ var data: Dictionary = {}
 var _tick_accumulator := 0.0
 
 var districts: Array[Dictionary] = [
-	{"id": "square", "name": "Town Square", "short": "Alun-alun", "description": "Pusat kota untuk bertemu warga dan melihat kabar terbaru."},
-	{"id": "residential", "name": "Residential District", "short": "Permukiman", "description": "Jalan tenang, rumah warga, dan tempat memulihkan energi."},
-	{"id": "commercial", "name": "Commercial District", "short": "Komersial", "description": "Toko, kedai, dan papan lowongan pekerjaan kota."},
-	{"id": "civic", "name": "Civic District", "short": "Civic", "description": "Balai kota dan pusat layanan publik."},
-	{"id": "park", "name": "Park District", "short": "Taman", "description": "Ruang hijau untuk melepas penat dan bertemu tetangga."}
+		{"id": "square", "name": "Town Square", "short": "Alun-alun", "description": "Pusat kota untuk bertemu warga dan melihat kabar terbaru."},
+		{"id": "residential", "name": "Residential District", "short": "Permukiman", "description": "Jalan tenang, rumah warga, dan tempat memulihkan energi."},
+		{"id": "commercial", "name": "Commercial District", "short": "Komersial", "description": "Toko, kedai, dan papan lowongan pekerjaan kota."},
+		{"id": "industrial", "name": "Industrial District", "short": "Industri", "description": "Gudang, bengkel, dan pusat produksi yang menggerakkan ekonomi kota."},
+		{"id": "civic", "name": "Civic District", "short": "Civic", "description": "Balai kota dan pusat layanan publik."},
+		{"id": "park", "name": "Park District", "short": "Taman", "description": "Ruang hijau untuk melepas penat dan bertemu tetangga."}
 ]
 
 var jobs: Array[Dictionary] = [
-	{"id": "courier", "title": "Antar paket", "place": "Commercial District", "duration": "Shift singkat", "reward": 42, "description": "Bantu toko mengantar paket ke sisi lain kota."},
-	{"id": "gardener", "title": "Rawat taman", "place": "Park District", "duration": "Shift singkat", "reward": 34, "description": "Rapikan jalur dan tanaman di taman kota."},
-	{"id": "clerk", "title": "Jaga loket", "place": "Civic District", "duration": "Shift singkat", "reward": 38, "description": "Bantu warga menemukan layanan di balai kota."}
+		{"id": "courier", "title": "Antar paket", "place": "Commercial District", "duration": "Shift singkat", "reward": 42, "description": "Bantu toko mengantar paket ke sisi lain kota."},
+		{"id": "gardener", "title": "Rawat taman", "place": "Park District", "duration": "Shift singkat", "reward": 34, "description": "Rapikan jalur dan tanaman di taman kota."},
+		{"id": "clerk", "title": "Jaga loket", "place": "Civic District", "duration": "Shift singkat", "reward": 38, "description": "Bantu warga menemukan layanan di balai kota."},
+		{"id": "warehouse", "title": "Sortir stok gudang", "place": "Industrial District", "duration": "Shift singkat", "reward": 55, "description": "Siapkan bahan produksi agar toko kota tetap berjalan."}
+]
+
+var city_events: Array[String] = [
+		"Festival kecil dimulai di alun-alun.",
+		"Gudang kota membuka shift tambahan.",
+		"Pasar malam menaikkan kunjungan ke toko.",
+		"Balai kota mencari relawan untuk layanan publik."
 ]
 
 var shop_items: Array[Dictionary] = [
@@ -54,6 +63,10 @@ func _default_state() -> Dictionary:
 		"world_hour": 9.5,
 		"activity_log": [{"time": "09:30", "text": "Tiba di kota untuk pertama kali."}],
 		"npc_affinity": {},
+		"daily_goal": "Selesaikan 1 shift dan kunjungi distrik baru.",
+		"city_event": city_events[0],
+		"jobs_completed_today": 0,
+		"ledger": [],
 		"reduced_motion": false,
 		"last_saved": ""
 	}
@@ -108,6 +121,13 @@ func add_activity(text: String) -> void:
 		log.pop_back()
 	data["activity_log"] = log
 
+func record_transaction(kind: String, amount: int, note: String) -> void:
+	var ledger: Array = data.get("ledger", [])
+	ledger.push_front({"id": "tx-%d-%d" % [Time.get_ticks_msec(), ledger.size()], "kind": kind, "amount": amount, "note": note, "day": int(data.get("day", 1))})
+	while ledger.size() > 12:
+		ledger.pop_back()
+	data["ledger"] = ledger
+
 func _commit(text: String = "") -> void:
 	if not text.is_empty():
 		add_activity(text)
@@ -126,6 +146,9 @@ func advance_time(hours: float, should_save := true) -> void:
 	while float(data["world_hour"]) >= 22.0:
 		data["world_hour"] = float(data["world_hour"]) - 14.0
 		data["day"] = int(data.get("day", 1)) + 1
+		data["jobs_completed_today"] = 0
+		data["city_event"] = city_events[(int(data["day"]) - 1) % city_events.size()]
+		data["daily_goal"] = "Selesaikan 1 shift di lokasi event dan tingkatkan reputasi."
 	if should_save:
 		save_state()
 
@@ -141,6 +164,9 @@ func perform_location_action(location_id: String) -> String:
 		"commercial":
 			data["mood"] = clampi(int(data.get("mood", 70)) + 3, 0, 100)
 			message = "Melihat etalase toko. Ada banyak hal untuk dibeli."
+		"industrial":
+			data["energy"] = clampi(int(data.get("energy", 82)) - 4, 0, 100)
+			message = "Memeriksa jalur produksi. Kota membutuhkan stok yang rapi."
 		"civic":
 			data["reputation"] = clampi(int(data.get("reputation", 8)) + 1, 0, 100)
 			message = "Membaca papan pengumuman kota. Reputasi +1."
@@ -169,14 +195,28 @@ func current_job() -> Dictionary:
 			return job
 	return {}
 
+func job_location_id(job: Dictionary) -> String:
+	match str(job.get("id", "")):
+		"courier": return "commercial"
+		"gardener": return "park"
+		"clerk": return "civic"
+		"warehouse": return "industrial"
+	return "square"
+
+func can_start_current_job() -> bool:
+	var job := current_job()
+	return not job.is_empty() and str(data.get("location", "square")) == job_location_id(job)
+
 func complete_job() -> Dictionary:
 	var job := current_job()
 	if job.is_empty():
 		return {}
 	data["coins"] = int(data.get("coins", 0)) + int(job["reward"])
+	record_transaction("upah", int(job["reward"]), str(job["title"]))
 	data["energy"] = clampi(int(data.get("energy", 82)) - 14, 0, 100)
 	data["reputation"] = clampi(int(data.get("reputation", 8)) + 2, 0, 100)
 	data["jobs_completed"] = int(data.get("jobs_completed", 0)) + 1
+	data["jobs_completed_today"] = int(data.get("jobs_completed_today", 0)) + 1
 	data["current_job"] = ""
 	advance_time(2.0, false)
 	_commit("Shift selesai: +%d koin dan reputasi +2." % int(job["reward"]))
@@ -187,8 +227,9 @@ func buy_item(item_id: String) -> Dictionary:
 		if item["id"] == item_id:
 			var price := int(item["price"])
 			if int(data.get("coins", 0)) < price:
-				return {"ok": false, "message": "Koin belum cukup untuk membeli %s." % item["name"]}
+					return {"ok": false, "message": "Koin belum cukup untuk membeli %s." % item["name"]}
 			data["coins"] = int(data.get("coins", 0)) - price
+			record_transaction("belanja", -price, str(item["name"]))
 			var inventory: Dictionary = data.get("inventory", {})
 			inventory[item_id] = int(inventory.get(item_id, 0)) + 1
 			data["inventory"] = inventory

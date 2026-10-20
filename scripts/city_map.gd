@@ -3,10 +3,21 @@ extends Control
 signal location_clicked(location_id: String)
 signal npc_clicked(npc_id: String)
 
-const TILE_W := 92.0
-const TILE_H := 46.0
-const MAP_W := 13
-const MAP_H := 10
+const TILE_W := 86.0
+const TILE_H := 43.0
+const MAP_W := 21
+const MAP_H := 16
+
+const TEX_TREE = preload("res://assets/user/ai_living_city/tree_broadleaf.png")
+const TEX_TREE_FLOWERING = preload("res://assets/user/ai_living_city/tree_flowering.png")
+const TEX_HOUSE = preload("res://assets/user/ai_living_city/house_red_roof.png")
+const TEX_SHOP = preload("res://assets/user/ai_living_city/shop_red_awning.png")
+const TEX_CIVIC = preload("res://assets/user/ai_living_city/civic_tower.png")
+const TEX_FOUNTAIN = preload("res://assets/user/ai_living_city/fountain.png")
+const TEX_PLAYER = preload("res://assets/user/ai_living_city/character_player_avatar.png")
+const TEX_NPC_FARMER = preload("res://assets/user/ai_living_city/character_farmer.png")
+const TEX_NPC_DOCTOR = preload("res://assets/user/ai_living_city/character_doctor.png")
+const TEX_NPC_ADVENTURER = preload("res://assets/user/ai_living_city/character_adventurer.png")
 
 var state: TownGameState
 var selected_location := "square"
@@ -23,6 +34,7 @@ var district_colors := {
 	"square": Color("#F6C56F"),
 	"residential": Color("#9CCB9C"),
 	"commercial": Color("#F39B84"),
+	"industrial": Color("#C8A78A"),
 	"civic": Color("#8BBFE7"),
 	"park": Color("#76C59B")
 }
@@ -102,24 +114,27 @@ func _draw_tile(top: Vector2, color: Color, highlighted: bool) -> void:
 		draw_polyline(PackedVector2Array([points[0], points[1], points[2], points[3], points[0]]), Color("#55D6BE"), 2.4)
 
 func _district_for_cell(cell: Vector2i) -> String:
-	if cell.x >= 4 and cell.x <= 7 and cell.y >= 4 and cell.y <= 6:
-		return "square"
-	if cell.x <= 3 and cell.y >= 4:
-		return "residential"
-	if cell.x >= 8 and cell.y >= 4:
-		return "commercial"
-	if cell.y <= 2 and cell.x >= 6:
-		return "civic"
-	return "park"
+		if cell.x >= 7 and cell.x <= 12 and cell.y >= 6 and cell.y <= 9:
+			return "square"
+		if cell.x <= 6 and cell.y >= 7:
+			return "residential"
+		if cell.x >= 13 and cell.y >= 7:
+			return "commercial"
+		if cell.x >= 14 and cell.y <= 5:
+			return "civic"
+		if cell.x >= 7 and cell.x <= 13 and cell.y >= 10:
+			return "industrial"
+		return "park"
 
 func _district_center(district: String) -> Vector2i:
 	match district:
-		"square": return Vector2i(6, 5)
-		"residential": return Vector2i(2, 6)
-		"commercial": return Vector2i(10, 6)
-		"civic": return Vector2i(9, 1)
-		"park": return Vector2i(5, 2)
-	return Vector2i(6, 5)
+		"square": return Vector2i(9, 7)
+		"residential": return Vector2i(3, 10)
+		"commercial": return Vector2i(17, 10)
+		"civic": return Vector2i(17, 2)
+		"industrial": return Vector2i(10, 13)
+		"park": return Vector2i(5, 3)
+	return Vector2i(9, 7)
 
 func _draw_roads() -> void:
 	var road_color := Color("#D5B98B")
@@ -132,11 +147,12 @@ func _draw_roads() -> void:
 
 func _draw_landmarks() -> void:
 	var landmark_cells := {
-		"square": [Vector2i(6, 5)],
-		"residential": [Vector2i(1, 5), Vector2i(2, 7), Vector2i(3, 6)],
-		"commercial": [Vector2i(9, 5), Vector2i(11, 6), Vector2i(10, 7)],
-		"civic": [Vector2i(8, 1)],
-		"park": [Vector2i(4, 2), Vector2i(6, 2), Vector2i(5, 3)]
+			"square": [Vector2i(9, 7)],
+			"residential": [Vector2i(2, 9), Vector2i(4, 11), Vector2i(5, 8)],
+			"commercial": [Vector2i(16, 9), Vector2i(18, 11), Vector2i(17, 8)],
+			"civic": [Vector2i(16, 2)],
+			"industrial": [Vector2i(9, 12), Vector2i(12, 13)],
+			"park": [Vector2i(4, 2), Vector2i(6, 3), Vector2i(5, 4)]
 	}
 	for district in landmark_cells.keys():
 		for cell in landmark_cells[district]:
@@ -156,6 +172,11 @@ func _draw_landmarks() -> void:
 func _draw_building(top: Vector2, district: String) -> void:
 	var s := zoom_factor
 	var base := top + Vector2(0, -4 * s)
+	var texture: Texture2D = TEX_SHOP if district == "commercial" else TEX_HOUSE
+	var sprite_size := Vector2(58.0, 70.0) * s
+	draw_texture_rect(texture, Rect2(base + Vector2(-29.0, -62.0) * s, sprite_size), false)
+	return
+	# Procedural fallback retained below for platforms without imported art.
 	var w := 25 * s
 	var h := 26 * s
 	var wall := Color("#F5E8D0") if district == "residential" else Color("#FFE1B5")
@@ -171,6 +192,8 @@ func _draw_building(top: Vector2, district: String) -> void:
 func _draw_civic_hall(top: Vector2) -> void:
 	var s := zoom_factor
 	var base := top + Vector2(0, -6*s)
+	draw_texture_rect(TEX_CIVIC, Rect2(base + Vector2(-38.0, -96.0) * s, Vector2(76.0, 104.0) * s), false)
+	return
 	var w := 42*s
 	var h := 34*s
 	draw_polygon(PackedVector2Array([base + Vector2(-w, 0), base + Vector2(0, 16*s), base + Vector2(w, 0), base + Vector2(0, -16*s)]), PackedColorArray([Color("#D6E7F4")]))
@@ -180,6 +203,8 @@ func _draw_civic_hall(top: Vector2) -> void:
 
 func _draw_tree(position: Vector2) -> void:
 	var s := zoom_factor
+	draw_texture_rect(TEX_TREE if int(position.x) % 2 == 0 else TEX_TREE_FLOWERING, Rect2(position + Vector2(-27.0, -72.0) * s, Vector2(54.0, 76.0) * s), false)
+	return
 	draw_line(position + Vector2(0, 2*s), position + Vector2(0, 24*s), Color("#76553A"), 5*s)
 	draw_circle(position + Vector2(-10*s, -8*s), 13*s, Color("#397C61"))
 	draw_circle(position + Vector2(8*s, -12*s), 15*s, Color("#4D9A6F"))
@@ -187,6 +212,8 @@ func _draw_tree(position: Vector2) -> void:
 
 func _draw_fountain(top: Vector2) -> void:
 	var s := zoom_factor
+	draw_texture_rect(TEX_FOUNTAIN, Rect2(top + Vector2(-31.0, -46.0) * s, Vector2(62.0, 66.0) * s), false)
+	return
 	_draw_ellipse_custom(top + Vector2(0, 6*s), Vector2(28*s, 10*s), Color("#5BAFC0"))
 	draw_circle(top + Vector2(0, -6*s), 5*s, Color("#D9F2F3"))
 	draw_line(top + Vector2(0, -6*s), top + Vector2(0, -22*s), Color("#B7EEF0"), 3*s)
@@ -218,12 +245,14 @@ func _draw_npcs() -> void:
 		draw_circle(position + Vector2(-4, -10) * zoom_factor, 2.2 * zoom_factor, Color("#233047"))
 		draw_circle(position + Vector2(4, -10) * zoom_factor, 2.2 * zoom_factor, Color("#233047"))
 		draw_string(ThemeDB.fallback_font, position + Vector2(-20, 29) * zoom_factor, str(npc["name"]), HORIZONTAL_ALIGNMENT_LEFT, -1, maxf(10 * zoom_factor, 8), Color("#E8F1F5"))
-
 func _draw_player() -> void:
 	if state == null:
 		return
 	var cell := _district_center(str(state.data.get("location", "square")))
 	var position := _tile_to_screen(cell) + Vector2(0, -25 * zoom_factor)
+	draw_texture_rect(TEX_PLAYER, Rect2(position + Vector2(-22.0, -64.0) * zoom_factor, Vector2(44.0, 76.0) * zoom_factor), false)
+	draw_string(ThemeDB.fallback_font, position + Vector2(-24, 20) * zoom_factor, "KAMU", HORIZONTAL_ALIGNMENT_LEFT, -1, maxf(10 * zoom_factor, 8), Color("#55D6BE"))
+	return
 	draw_circle(position + Vector2(0, 4), 17 * zoom_factor, Color(0.05, 0.08, 0.13, 0.35))
 	draw_circle(position, 14 * zoom_factor, Color("#55D6BE"))
 	draw_circle(position + Vector2(0, -10) * zoom_factor, 8 * zoom_factor, Color("#FFE0B2"))

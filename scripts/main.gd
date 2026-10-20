@@ -16,6 +16,7 @@ var location_label: Label
 var location_desc: Label
 var profile_label: Label
 var needs_label: Label
+var city_status_label: Label
 var activity_label: Label
 var npc_label: Label
 var talk_button: Button
@@ -148,6 +149,9 @@ func _build_sidebar() -> void:
 	needs_label = _label("Energi 82  •  Mood 70  •  Reputasi 8", 12, palette["muted"])
 	needs_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(needs_label)
+	city_status_label = _label("Agenda hari ini…", 12, palette["amber"])
+	city_status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(city_status_label)
 	content.add_child(_separator())
 	content.add_child(_eyebrow("LOKASI TERPILIH"))
 	location_label = _label("Town Square", 17, palette["amber"])
@@ -196,6 +200,10 @@ func _build_sidebar() -> void:
 	inventory_label = _label("", 12, palette["text"])
 	inventory_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(inventory_label)
+	content.add_child(_eyebrow("RIWAYAT AKSI / LEDGER"))
+	activity_label = _label("Belum ada aktivitas.", 11, palette["muted"])
+	activity_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(activity_label)
 	var reset_button := _button("Reset progres lokal", 0)
 	reset_button.add_theme_color_override("font_color", palette["red"])
 	reset_button.pressed.connect(_reset_progress)
@@ -274,6 +282,7 @@ func _refresh_all() -> void:
 	save_label.text = "● Tersimpan lokal"
 	profile_label.text = "%s  •  Penghuni #001" % str(state.data.get("display_name", "Raka"))
 	needs_label.text = "Energi %d  •  Mood %d  •  Reputasi %d" % [int(state.data.get("energy", 0)), int(state.data.get("mood", 0)), int(state.data.get("reputation", 0))]
+	city_status_label.text = "AGENDA KOTA\n%s\nEvent: %s\nShift hari ini: %d" % [str(state.data.get("daily_goal", "Jelajahi kota.")), str(state.data.get("city_event", "Tidak ada event.")), int(state.data.get("jobs_completed_today", 0))]
 	location_label.text = str(district.get("name", selected_location))
 	location_desc.text = str(district.get("description", ""))
 	primary_action_button.text = _action_label(selected_location)
@@ -302,8 +311,11 @@ func _refresh_jobs() -> void:
 		child.queue_free()
 	var current := state.current_job()
 	if not current.is_empty():
-		job_status_label.text = "Aktif: %s\n%s • reward %d koin" % [current["title"], current["place"], int(current["reward"])]
-		work_button.disabled = working
+		var job_location := state.job_location_id(current)
+		var at_workplace := str(state.data.get("location", "square")) == job_location
+		job_status_label.text = "Aktif: %s\n%s • reward %d koin\n%s" % [current["title"], current["place"], int(current["reward"]), "Siap bekerja." if at_workplace else "Pergi ke %s untuk mulai." % current["place"]]
+		work_button.text = "Mulai shift" if at_workplace else "Pergi ke tempat kerja"
+		work_button.disabled = working or not at_workplace
 	else:
 		job_status_label.text = "Belum ada pekerjaan aktif. Pilih satu untuk memulai rutinitas."
 		work_button.disabled = true
@@ -328,12 +340,21 @@ func _refresh_shop() -> void:
 func _refresh_inventory() -> void:
 	var inventory: Dictionary = state.data.get("inventory", {})
 	inventory_label.text = "☕ Kopi hangat  ×%d\n▰ Roti panggang  ×%d\n✿ Bibit tanaman  ×%d\n\nShift selesai: %d" % [int(inventory.get("kopi", 0)), int(inventory.get("roti", 0)), int(inventory.get("tanaman", 0)), int(state.data.get("jobs_completed", 0))]
+	var lines: Array[String] = []
+	for entry in state.data.get("activity_log", []).slice(0, 4):
+		lines.append("%s  %s" % [str(entry.get("time", "--:--")), str(entry.get("text", ""))])
+	var ledger: Array = state.data.get("ledger", [])
+	if not ledger.is_empty():
+		var last: Dictionary = ledger[0]
+		lines.append("Ledger: %s %d koin" % [str(last.get("kind", "aksi")), int(last.get("amount", 0))])
+	activity_label.text = "\n".join(lines) if not lines.is_empty() else "Belum ada aktivitas."
 
 func _action_label(location_id: String) -> String:
 	match location_id:
 		"square": return "Sapa suasana alun-alun"
 		"residential": return "Istirahat di permukiman"
 		"commercial": return "Lihat aktivitas toko"
+		"industrial": return "Periksa produksi kota"
 		"civic": return "Baca pengumuman kota"
 		"park": return "Santai di taman"
 	return "Lakukan aktivitas"
@@ -370,7 +391,9 @@ func _accept_job(job_id: String) -> void:
 		_refresh_all()
 
 func _start_work() -> void:
-	if state.current_job().is_empty() or working:
+	if state.current_job().is_empty() or working or not state.can_start_current_job():
+		if not state.current_job().is_empty() and not state.can_start_current_job():
+			_show_toast("Pergi ke %s terlebih dahulu." % state.current_job()["place"])
 		return
 	working = true
 	work_elapsed = 0.0
