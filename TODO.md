@@ -16,7 +16,15 @@
 - [x] UI menggunakan Bahasa Indonesia dan menyediakan kontrol zoom, pan, serta opsi pengurangan animasi.
 - [x] Fitur yang membutuhkan backend—multiplayer, autentikasi, Supabase, ledger produksi, governance, AI LLM, backup, dan simulasi server-side—ditandai belum tersedia, bukan diklaim selesai.
 
-## 2. Quality and delivery — IN PROGRESS
+## 2. User asset sheet integration — COMPLETE FOR THIS CHECKPOINT
+
+- [x] Asset sheet yang dikirim pengguna disimpan sebagai `source_master.png` tanpa menimpa file asli.
+- [x] Sheet dipotong menjadi 15 category sheets dan sprite reusable melalui `tools/slice_user_assets.py`.
+- [x] Sprite hasil crop digunakan pada rendering game untuk bangunan rumah, toko, civic tower, pohon, fountain/street object, serta avatar pemain.
+- [x] Transparansi latar kertas diperbaiki secara deterministik agar sprite tidak tampil sebagai kotak putih.
+- [x] Source check dan Preview berhasil setelah integrasi aset.
+
+## 3. Quality and delivery — IN PROGRESS
 
 - [x] `npm run check` lulus untuk source dan boot.
 - [x] `npm run build` menghasilkan export Web pada `dist/standalone`.
@@ -26,7 +34,7 @@
 - [ ] Source hasil implementasi disinkronkan ke `duerohub2/TownAI`.
 - [ ] Smoke acceptance interaktif di browser pengguna masih perlu dilakukan; native checks tidak membuktikan seluruh input browser.
 
-## 3. Next phases — NOT STARTED
+## 4. Next phases — NOT STARTED
 
 - [ ] Supabase Auth dan database persisten.
 - [ ] Server-authoritative economy dan append-only ledger.

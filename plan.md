@@ -11,6 +11,7 @@ Membangun playable offline MVP untuk browser desktop dan mobile. Pemain menjelaj
 - Persistence: JSON lokal melalui `user://townai_save.json`; setiap perubahan ekonomi, perjalanan, interaksi, dan inventory langsung disimpan.
 - Simulation: jam kota dan jadwal NPC deterministik berbasis waktu sesi, tanpa panggilan LLM.
 - Future boundaries: state operations dikumpulkan dalam `TownGameState` agar backend Supabase, ledger server-side, dan multiplayer authoritative dapat ditambahkan tanpa menaruh logika ekonomi di UI.
+- Visual source: asset sheet pixel-art yang disediakan pengguna disimpan sebagai master dan di-slice menjadi kategori serta sprite yang dipakai pada landmark kota, pohon, bangunan, fountain, dan avatar pemain.
 - Delivery: preview build Godot Web, finite checks, checkpoint managed, lalu source disimpan ke repo GitHub `duerohub2/TownAI`.
 
 ## Struktur proyek
@@ -20,6 +21,8 @@ Membangun playable offline MVP untuk browser desktop dan mobile. Pemain menjelaj
 - `scripts/main.gd` — layout UI, input actions, feedback, job flow, dan integrasi state/map.
 - `scripts/city_map.gd` — peta isometrik, distrik, bangunan, NPC, player marker, pan/zoom, dan picking.
 - `scripts/game_state.gd` — karakter, uang, item, pekerjaan, kebutuhan, aktivitas, jam kota, NPC schedule, dan local save.
+- `tools/slice_user_assets.py` — slicing reproducible dari asset sheet pengguna, termasuk penghapusan latar kertas untuk sprite.
+- `assets/user/ai_living_city/` — master asset sheet, category sheets, dan sprite hasil crop untuk integrasi game.
 - `plan.md` — keputusan implementasi dan desain.
 - `TODO.md` — outcomes serta status delivery.
 

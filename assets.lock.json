@@ -4,6 +4,10 @@
     "template": {
       "name": "Template",
       "order": 0
+    },
+    "user": {
+      "name": "User",
+      "order": 20
     }
   },
   "bundles": {},
@@ -127,6 +131,270 @@
       "assetType": "image",
       "groupId": "template",
       "used": true
+    },
+    "assets/user/ai_living_city/ai_living_system.png": {
+      "path": "/manus-storage/game/sha256/596a3b5a81f85e4a9d2073d749e0ac2a889d40b623c4218fb2ed4243d7acc253.png",
+      "sha256": "sha256:596a3b5a81f85e4a9d2073d749e0ac2a889d40b623c4218fb2ed4243d7acc253",
+      "size": 225027,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/animal_chicken.png": {
+      "path": "/manus-storage/game/sha256/fa4aad95b3663bb562e5a975bf9a55f2447dcd68f645ecad19162cc775085b19.png",
+      "sha256": "sha256:fa4aad95b3663bb562e5a975bf9a55f2447dcd68f645ecad19162cc775085b19",
+      "size": 8025,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/animal_dog.png": {
+      "path": "/manus-storage/game/sha256/7a4efdbca771f2bc1983928b2ddabcfe43c4f9a6ba869776d2089216378541dc.png",
+      "sha256": "sha256:7a4efdbca771f2bc1983928b2ddabcfe43c4f9a6ba869776d2089216378541dc",
+      "size": 7331,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/animals.png": {
+      "path": "/manus-storage/game/sha256/cb7c38582fbe5bf32f3b198b892734036abc3d356d3262b7c8d517bca57b9ed8.png",
+      "sha256": "sha256:cb7c38582fbe5bf32f3b198b892734036abc3d356d3262b7c8d517bca57b9ed8",
+      "size": 125746,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/animation_sprites.png": {
+      "path": "/manus-storage/game/sha256/881c383e1801eb6f6d0d87244d93effe767d4e6e1b1271e83fd047c1594d2d61.png",
+      "sha256": "sha256:881c383e1801eb6f6d0d87244d93effe767d4e6e1b1271e83fd047c1594d2d61",
+      "size": 159322,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/building_parts.png": {
+      "path": "/manus-storage/game/sha256/77e58c9a21434bd73a196c6a7bda90ac15b65bd521e3a5b5fbee7ba8da245429.png",
+      "sha256": "sha256:77e58c9a21434bd73a196c6a7bda90ac15b65bd521e3a5b5fbee7ba8da245429",
+      "size": 257928,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/buildings.png": {
+      "path": "/manus-storage/game/sha256/f2f61ed75ccb50568f3923da658c7cad28b9c4c04151118a7e89f250e48f29df.png",
+      "sha256": "sha256:f2f61ed75ccb50568f3923da658c7cad28b9c4c04151118a7e89f250e48f29df",
+      "size": 663895,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/character_adventurer.png": {
+      "path": "/manus-storage/game/sha256/34693f2352cd14e8d965726985589c59f7e7d4d805f0f89ed57ba501d9c85d27.png",
+      "sha256": "sha256:34693f2352cd14e8d965726985589c59f7e7d4d805f0f89ed57ba501d9c85d27",
+      "size": 4854,
+      "assetType": "image",
+      "groupId": "user",
+      "used": true
+    },
+    "assets/user/ai_living_city/character_doctor.png": {
+      "path": "/manus-storage/game/sha256/914b71186322190adf23a5713631b02daf399326ceefd776746fafe8ea4111f9.png",
+      "sha256": "sha256:914b71186322190adf23a5713631b02daf399326ceefd776746fafe8ea4111f9",
+      "size": 4873,
+      "assetType": "image",
+      "groupId": "user",
+      "used": true
+    },
+    "assets/user/ai_living_city/character_farmer.png": {
+      "path": "/manus-storage/game/sha256/f0df8e5461ec5dc3b63b687cd1484944c20f3af02740be6122ea4cf8fef1cb33.png",
+      "sha256": "sha256:f0df8e5461ec5dc3b63b687cd1484944c20f3af02740be6122ea4cf8fef1cb33",
+      "size": 4117,
+      "assetType": "image",
+      "groupId": "user",
+      "used": true
+    },
+    "assets/user/ai_living_city/character_player_avatar.png": {
+      "path": "/manus-storage/game/sha256/fc8634167df47455f65ce8de5b951136d4ded43a5549a7685a57479b2f1f6401.png",
+      "sha256": "sha256:fc8634167df47455f65ce8de5b951136d4ded43a5549a7685a57479b2f1f6401",
+      "size": 2179,
+      "assetType": "image",
+      "groupId": "user",
+      "used": true
+    },
+    "assets/user/ai_living_city/characters.png": {
+      "path": "/manus-storage/game/sha256/de603ca95dbf7df068ad8558d40c1a4bfb4283eee5572aa68f20b15494148e14.png",
+      "sha256": "sha256:de603ca95dbf7df068ad8558d40c1a4bfb4283eee5572aa68f20b15494148e14",
+      "size": 366220,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/civic_tower.png": {
+      "path": "/manus-storage/game/sha256/bb8d2538116c9abd1df28a92c290932b124545317087609aeb8a5aa59a31c7a4.png",
+      "sha256": "sha256:bb8d2538116c9abd1df28a92c290932b124545317087609aeb8a5aa59a31c7a4",
+      "size": 22482,
+      "assetType": "image",
+      "groupId": "user",
+      "used": true
+    },
+    "assets/user/ai_living_city/crystal_blue.png": {
+      "path": "/manus-storage/game/sha256/77d603f9a2961179e8bef824b284d5f95f40535b87fe2344a1d590c3f66a6b23.png",
+      "sha256": "sha256:77d603f9a2961179e8bef824b284d5f95f40535b87fe2344a1d590c3f66a6b23",
+      "size": 10520,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/economy_business.png": {
+      "path": "/manus-storage/game/sha256/ff3c69c284c47f65fb97546296ffcf952df3103532dd2cb261334acf2a99f7cd.png",
+      "sha256": "sha256:ff3c69c284c47f65fb97546296ffcf952df3103532dd2cb261334acf2a99f7cd",
+      "size": 178996,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/effects.png": {
+      "path": "/manus-storage/game/sha256/67ce8a09b63fcbd2d449c4e86ee8305d05406a1e5b8a86f76d588ad03be0ff3e.png",
+      "sha256": "sha256:67ce8a09b63fcbd2d449c4e86ee8305d05406a1e5b8a86f76d588ad03be0ff3e",
+      "size": 107319,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/equipment.png": {
+      "path": "/manus-storage/game/sha256/86639c86ed0b5e1dcb48f9c55c2ac85cedff35e45641b3f841bd915c31fdd091.png",
+      "sha256": "sha256:86639c86ed0b5e1dcb48f9c55c2ac85cedff35e45641b3f841bd915c31fdd091",
+      "size": 101581,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/fountain.png": {
+      "path": "/manus-storage/game/sha256/4ee2934c42ec78d88e04bdaf95a1360bcd50230368b775474428f75c185dfd69.png",
+      "sha256": "sha256:4ee2934c42ec78d88e04bdaf95a1360bcd50230368b775474428f75c185dfd69",
+      "size": 13265,
+      "assetType": "image",
+      "groupId": "user",
+      "used": true
+    },
+    "assets/user/ai_living_city/furniture_interior.png": {
+      "path": "/manus-storage/game/sha256/12f15904bbc6c1017a78e2ca17fe5cad4327b8453c500d9f381ca74476b3d446.png",
+      "sha256": "sha256:12f15904bbc6c1017a78e2ca17fe5cad4327b8453c500d9f381ca74476b3d446",
+      "size": 372128,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/government_community.png": {
+      "path": "/manus-storage/game/sha256/8f6608d970ad975fff6139d294da7d930829b37ff4de6224a957711811be9d81.png",
+      "sha256": "sha256:8f6608d970ad975fff6139d294da7d930829b37ff4de6224a957711811be9d81",
+      "size": 196025,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/house_blue_roof.png": {
+      "path": "/manus-storage/game/sha256/a938f62fc7bb50b4a6f4698ab5eb396fecf38046f962b130a095aca217e20d41.png",
+      "sha256": "sha256:a938f62fc7bb50b4a6f4698ab5eb396fecf38046f962b130a095aca217e20d41",
+      "size": 9639,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/house_red_roof.png": {
+      "path": "/manus-storage/game/sha256/d7b0becf3522e3691e65d0c4b93277dce1b9a322b72032252ffaa911ac95ae7b.png",
+      "sha256": "sha256:d7b0becf3522e3691e65d0c4b93277dce1b9a322b72032252ffaa911ac95ae7b",
+      "size": 9488,
+      "assetType": "image",
+      "groupId": "user",
+      "used": true
+    },
+    "assets/user/ai_living_city/market_stall.png": {
+      "path": "/manus-storage/game/sha256/7da34abe01e4b0e05768145ff9a05935f8d2069dea846e7c2185024dc8ad41fd.png",
+      "sha256": "sha256:7da34abe01e4b0e05768145ff9a05935f8d2069dea846e7c2185024dc8ad41fd",
+      "size": 9765,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/nature.png": {
+      "path": "/manus-storage/game/sha256/b001accc18cf6534d43de00ddf6ebd3fb77dc12403862b8b9fc9c92c485831c0.png",
+      "sha256": "sha256:b001accc18cf6534d43de00ddf6ebd3fb77dc12403862b8b9fc9c92c485831c0",
+      "size": 362210,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/shop_red_awning.png": {
+      "path": "/manus-storage/game/sha256/48e3dd520c84c053f4d909448b14d6cf0cf5e82b77e9f7444e8c2582ebf824d9.png",
+      "sha256": "sha256:48e3dd520c84c053f4d909448b14d6cf0cf5e82b77e9f7444e8c2582ebf824d9",
+      "size": 8663,
+      "assetType": "image",
+      "groupId": "user",
+      "used": true
+    },
+    "assets/user/ai_living_city/source_master.png": {
+      "path": "/manus-storage/game/sha256/19ddb03caf590bdcf96207e3d943570c2fae78223e19d9a79dd780a6fbacbefe.png",
+      "sha256": "sha256:19ddb03caf590bdcf96207e3d943570c2fae78223e19d9a79dd780a6fbacbefe",
+      "size": 4407606,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/street_lamp.png": {
+      "path": "/manus-storage/game/sha256/6826949cc3efad755b6df423f2e63c011ef9b457203a5538eaa5f5121f6ca293.png",
+      "sha256": "sha256:6826949cc3efad755b6df423f2e63c011ef9b457203a5538eaa5f5121f6ca293",
+      "size": 6384,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/street_objects.png": {
+      "path": "/manus-storage/game/sha256/6503e4a801ad412f84e94e14c999b98071367fba3ff2960b0a7584666d0f48de.png",
+      "sha256": "sha256:6503e4a801ad412f84e94e14c999b98071367fba3ff2960b0a7584666d0f48de",
+      "size": 411646,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/terrain_tiles.png": {
+      "path": "/manus-storage/game/sha256/da801be5e3592e87d96c9712d6686991ad4da4548cc2a4da2bbc719ae6d2f4c0.png",
+      "sha256": "sha256:da801be5e3592e87d96c9712d6686991ad4da4548cc2a4da2bbc719ae6d2f4c0",
+      "size": 324457,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/tree_broadleaf.png": {
+      "path": "/manus-storage/game/sha256/78839fd239600eadd28d9322e3eb1215505f3f07c804ee8eb71ee112f960131d.png",
+      "sha256": "sha256:78839fd239600eadd28d9322e3eb1215505f3f07c804ee8eb71ee112f960131d",
+      "size": 9744,
+      "assetType": "image",
+      "groupId": "user",
+      "used": true
+    },
+    "assets/user/ai_living_city/tree_evergreen.png": {
+      "path": "/manus-storage/game/sha256/39714ec0925f70654541eb05db3bcd3c484a5026d8f5995d85b9472614db2b9a.png",
+      "sha256": "sha256:39714ec0925f70654541eb05db3bcd3c484a5026d8f5995d85b9472614db2b9a",
+      "size": 9822,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
+    },
+    "assets/user/ai_living_city/tree_flowering.png": {
+      "path": "/manus-storage/game/sha256/2566261a6d26aeb43826c76f1b5b74885ee930495da24d46ff5158263746dba1.png",
+      "sha256": "sha256:2566261a6d26aeb43826c76f1b5b74885ee930495da24d46ff5158263746dba1",
+      "size": 10362,
+      "assetType": "image",
+      "groupId": "user",
+      "used": true
+    },
+    "assets/user/ai_living_city/ui_game_assets.png": {
+      "path": "/manus-storage/game/sha256/bcc3426d126d1a6ac009ed57c788c02f775851a3938d6e96ddb27eaa9c1b1e58.png",
+      "sha256": "sha256:bcc3426d126d1a6ac009ed57c788c02f775851a3938d6e96ddb27eaa9c1b1e58",
+      "size": 176844,
+      "assetType": "image",
+      "groupId": "user",
+      "used": false
     }
   }
 }
