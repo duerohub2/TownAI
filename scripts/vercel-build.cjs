@@ -10,10 +10,16 @@ if (!fs.existsSync(entry)) {
   process.exit(1);
 }
 
-const required = ['index.js', 'index.png', 'game-release.json'];
+const required = ['index.js', 'index.png', 'index.pck', 'index.wasm', 'game-release.json'];
 const missing = required.filter((name) => !fs.existsSync(path.join(site, name)));
 if (missing.length > 0) {
   console.error(`Vercel build gagal: artefak static hilang: ${missing.join(', ')}`);
+  process.exit(1);
+}
+
+const html = fs.readFileSync(entry, 'utf8');
+if (html.includes('/manus-storage/')) {
+  console.error('Vercel build gagal: index.html masih menunjuk ke Manus Storage internal.');
   process.exit(1);
 }
 
