@@ -31,7 +31,7 @@
 - [x] `npm run check -- --pack` lulus untuk pack yang dibangun.
 - [x] `npm run preview:build` berhasil dan native Preview menampilkan map serta panel konteks.
 - [ ] Checkpoint managed tersimpan ke remote project.
-- [ ] Source hasil implementasi disinkronkan ke `duerohub2/TownAI`.
+- [x] Source hasil implementasi dan 33 PNG hasil slicing asset sheet disinkronkan ke `duerohub2/TownAI`.
 - [ ] Smoke acceptance interaktif di browser pengguna masih perlu dilakukan; native checks tidak membuktikan seluruh input browser.
 
 ## 4. Next phases — NOT STARTED
